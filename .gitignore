@@ -1,5 +1,41 @@
-.env
+# Python/Django
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
+*.pot
+*.pyc
 db.sqlite3
-__pycache__
+media/
+staticfiles/
+*.env
+*.env.*
+
+# Node/Frontend
+node_modules/
+.next/
+dist/
+build/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+
+# Docker
+*.dockerignore
+docker-compose.override.yml
+docker-compose.override.*.yml
+*.pid
+
+# VSCode / IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
 .DS_Store
-.qodo
+Thumbs.db
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
