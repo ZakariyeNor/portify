@@ -1,15 +1,15 @@
-# 📌 18 GitHub Issues (With Priority Percentages Applied)
+# 1 GitHub Issues (With Priority Percentages Applied)
 
 Ready to paste directly into GitHub Issues or Milestones.
 
 ---
 
-## 🟦 60% MUST-HAVE (Milestones 1–3)
+##  60% MUST-HAVE (Milestones 1–3)
 These are required for the MVP.
 
 ---
 
-# 🗂️ Milestone 1 — Core Infrastructure (Must-Have, 20%)
+#  Milestone 1 — Core Infrastructure (Must-Have, 20%)
 
 ### **Issue 1 — Initialize GitHub Repository**
 - Create repository  
@@ -41,7 +41,7 @@ Add base configs and placeholders.
 
 ---
 
-# 🗂️ Milestone 2 — Backend API (Must-Have, 20%)
+#  Milestone 2 — Backend API (Must-Have, 20%)
 
 ### **Issue 5 — Initialize Django + DRF Project**
 - Create Django project  
@@ -87,7 +87,7 @@ Tests for:
 
 ---
 
-# 🗂️ Milestone 3 — Frontend Core Pages (Must-Have, 20%)
+#  Milestone 3 — Frontend Core Pages (Must-Have, 20%)
 
 ### **Issue 11 — Initialize Next.js + Tailwind + DaisyUI**
 - Next.js setup  
@@ -125,12 +125,12 @@ Tests for:
 
 ---
 
-## 🟧 20% SHOULD-HAVE (Milestones 4–5)
+##  20% SHOULD-HAVE (Milestones 4–5)
 Enhances functionality but MVP works without these.
 
 ---
 
-# 🗂️ Milestone 4 — Contact System (Should-Have, 10%)
+#  Milestone 4 — Contact System (Should-Have, 10%)
 
 ### **Issue 16 — Implement Contact Form API Integration**
 - Connect frontend contact form  
@@ -144,7 +144,7 @@ Enhances functionality but MVP works without these.
 
 ---
 
-# 🗂️ Milestone 5 — Celery + Redis Async Tasks (Should-Have, 10%)
+#  Milestone 5 — Celery + Redis Async Tasks (Should-Have, 10%)
 
 ### **Issue 18 — Configure Celery + Redis for Background Email**
 - Add Celery worker service  
@@ -153,7 +153,7 @@ Enhances functionality but MVP works without these.
 
 ---
 
-## 🟩 15% COULD-HAVE (Optional Future Tasks)
+##  15% COULD-HAVE (Optional Future Tasks)
 (Not included in the 18 issues — add later as enhancements.)
 
 Examples:
@@ -164,7 +164,7 @@ Examples:
 
 ---
 
-## ❌ 5% WON’T-HAVE (Auth Excluded from MVP)
+##  5% WON’T-HAVE (Auth Excluded from MVP)
 No authentication or authorization required for MVP.
 
 ---
