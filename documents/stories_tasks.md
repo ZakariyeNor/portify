@@ -3,7 +3,7 @@ Comprehensive breakdown of backend, frontend, and DevOps tasks for the portfolio
 
 ---
 
-## 🛠️ Backend Tasks
+## Backend Tasks
 
 ### 1. Project Setup  
 - Set up Django project  
@@ -44,7 +44,7 @@ Comprehensive breakdown of backend, frontend, and DevOps tasks for the portfolio
 
 ---
 
-## 🎨 Frontend Tasks
+## Frontend Tasks
 
 ### 1. Setup  
 - Initialize Next.js project  
@@ -87,7 +87,7 @@ Comprehensive breakdown of backend, frontend, and DevOps tasks for the portfolio
 
 ---
 
-## 🚀 Deployment / DevOps Tasks
+## Deployment / DevOps Tasks
 
 ### 1. Docker  
 - Dockerize Django backend  
