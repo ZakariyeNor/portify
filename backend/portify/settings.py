@@ -8,15 +8,14 @@ SETTINGS_DIR = Path(__file__).resolve().parent
 # 2. Go up one level to the 'backend' folder (/portify-project/backend/)
 BACKEND_DIR = SETTINGS_DIR.parent
 
-# 3. Go up a final level to the root 'portify-project' folder (/portify-project/)
-BASE_DIR = BACKEND_DIR.parent
+# The .env file is in the backend folder
+env_file_path = BACKEND_DIR / ".env"
 
-# Initialize environ and specify the exact location of the .env file in the root
+# Initialize environ
 env = environ.Env()
-env_file_path = BASE_DIR / ".env"
 
 # --- Keep these debug print statements to confirm it's fixed ---
-print(f"DEBUG: Calculated BASE_DIR is: {BASE_DIR}")
+print(f"DEBUG: Calculated BACKEND_DIR is: {BACKEND_DIR}")
 print(f"DEBUG: Checking for .env file at: {env_file_path}")
 print(f"DEBUG: Does .env file exist? {env_file_path.exists()}")
 # ----------------------------------------------------------------

@@ -6,7 +6,7 @@ set -e
 echo "Starting Django container entrypoint..."
 
 # Use a Python scriptlet for reliable TCP port checking
-echo "Waiting for Postgres to be ready on $DB_HOST:$DB_PORT..."
+echo "Waiting for Postgres to be ready on '$POSTGRES_HOST', $POSTGRES_PORT..."
 
 # Python code to check if a TCP connection is possible
 until python3 -c "import socket; s = socket.socket(
