@@ -1,0 +1,113 @@
+version: "3.9"
+
+services:
+  # ---------------------
+  # Postgres Database
+  # ---------------------
+  db:
+    image: postgres:15
+    container_name: portify_db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_HOST_PORT}:${POSTGRES_PORT}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ---------------------
+  # Redis (Message broker + caching)
+  # ---------------------
+  redis:
+    image: redis:7
+    container_name: portify_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # ---------------------
+  # Django Backend (Web)
+  # ---------------------
+  web:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: portify_backend
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             gunicorn portify.wsgi:application --bind 0.0.0.0:8000"
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  # ---------------------
+  # Celery Worker
+  # ---------------------
+  celery:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: portify_celery
+    command: celery -A portify worker -l info
+    volumes:
+      - ./backend:/app
+    env_file:
+      - .env
+    depends_on:
+      - web
+      - redis
+      - db
+
+  # ---------------------
+  # Celery Beat (scheduler)
+  # ---------------------
+  celery_beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: portify_celery_beat
+    command: celery -A portify beat -l info
+    volumes:
+      - ./backend:/app
+    env_file:
+      - .env
+    depends_on:
+      - web
+      - redis
+      - db
+
+  # ---------------------
+  # Flower — Celery Monitoring UI
+  # ---------------------
+  flower:
+    image: mher/flower
+    container_name: portify_flower
+    command: >
+      flower --broker=redis://redis:6379/0
+    ports:
+      - "5555:5555"
+    depends_on:
+      - redis
+
+# ---------------------
+# Volumes for persistence
+# ---------------------
+volumes:
+  postgres_data:
+  redis_data:
