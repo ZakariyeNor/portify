@@ -1,21 +1,21 @@
 # Base Image
-FROM python3.12-slim
+FROM python:3.12-slim
 
-# ENV variables
-ENV PYTHONDONTWRITEBYTECODE = 1
-ENV PYTHONUNBUFFERED = 1
+# Disable .pyc files and enable unbuffered logs
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-# Set working dir
-WORKDIR = /app
+# Set working directory
+WORKDIR /app
 
-# Install system dependency
+# Install dependencies for psycopg2 and curl
 RUN apt-get update && apt-get install -y \
     gcc \
     libpq-dev \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install pyhton dependencies
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache-dir -r requirements.txt
@@ -23,5 +23,5 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 # Copy project files
 COPY . .
 
-# Default command
+# Default command (overwritten by docker-compose)
 CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
