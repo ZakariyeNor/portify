@@ -46,5 +46,11 @@ python3 manage.py migrate
 echo "Migrations completed successfully."
 
 
-# Run the container command (usually gunicorn or runserver)
-exec "$@"
+# Run the container command
+# If no command is provided, run the default CMD from Dockerfile
+if [ $# -eq 0 ]; then
+    echo "Starting Django development server..."
+    exec python3 manage.py runserver 0.0.0.0:8000
+else
+    exec "$@"
+fi
