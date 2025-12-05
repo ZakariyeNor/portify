@@ -1,10 +1,32 @@
 import os
 from pathlib import Path
+import environ
 
+# 1. Start from the current file's directory (/portify-project/backend/portify/)
+SETTINGS_DIR = Path(__file__).resolve().parent
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# 2. Go up one level to the 'backend' folder (/portify-project/backend/)
+BACKEND_DIR = SETTINGS_DIR.parent
 
+# 3. Go up a final level to the root 'portify-project' folder (/portify-project/)
+BASE_DIR = BACKEND_DIR.parent
+
+# Initialize environ and specify the exact location of the .env file in the root
+env = environ.Env()
+env_file_path = BASE_DIR / ".env"
+
+# --- Keep these debug print statements to confirm it's fixed ---
+print(f"DEBUG: Calculated BASE_DIR is: {BASE_DIR}")
+print(f"DEBUG: Checking for .env file at: {env_file_path}")
+print(f"DEBUG: Does .env file exist? {env_file_path.exists()}")
+# ----------------------------------------------------------------
+
+# Get the file if it's exists
+if env_file_path.exists():
+    env.read_env(env_file_path)
+    print("DEBUG: .env file found and read successfully.")
+else:
+    print(f".env file not found at {env_file_path}")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
@@ -32,6 +54,7 @@ INSTALLED_APPS = [
     # Third-party
     
     # Local
+    "portfolio",
 ]
 
 MIDDLEWARE = [
@@ -70,13 +93,20 @@ WSGI_APPLICATION = 'portify.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('POSTGRES_HOST'),
-        'PORT': os.getenv('POSTGRES_PORT', 5432),
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('POSTGRES_HOST'),
+        'PORT': env('POSTGRES_PORT', cast=int, default=5432),
     }
 }
+
+# --- ADD THESE LINES NOW ---
+print("\n--- Database Configuration Loaded ---")
+print(f"Database Name: {DATABASES['default']['NAME']}")
+print(f"Database Host: {DATABASES['default']['HOST']}")
+print(f"Database Port: {DATABASES['default']['PORT']}")
+print("-----------------------------------\n")
 
 
 # Password validation
