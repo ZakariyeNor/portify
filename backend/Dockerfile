@@ -23,5 +23,8 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 # Copy project files
 COPY . .
 
+# Make entrypoint executable
+RUN chmod +x ./entrypoint.sh
+
 # Default command (overwritten by docker-compose)
 CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
