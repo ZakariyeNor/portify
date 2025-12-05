@@ -2,33 +2,18 @@ import os
 from pathlib import Path
 import environ
 
-# 1. Start from the current file's directory (/portify-project/backend/portify/)
-SETTINGS_DIR = Path(__file__).resolve().parent
-
-# 2. Go up one level to the 'backend' folder (/portify-project/backend/)
-BACKEND_DIR = SETTINGS_DIR.parent
-
-# The .env file is in the backend folder
-env_file_path = BACKEND_DIR / ".env"
-
 # Initialize environ
 env = environ.Env()
 
-# --- Keep these debug print statements to confirm it's fixed ---
-print(f"DEBUG: Calculated BACKEND_DIR is: {BACKEND_DIR}")
-print(f"DEBUG: Checking for .env file at: {env_file_path}")
-print(f"DEBUG: Does .env file exist? {env_file_path.exists()}")
-# ----------------------------------------------------------------
+# .env is mounted at /app/.env in Docker (backend folder is /app)
+BASE_DIR = Path(__file__).resolve().parent.parent
+env_file = BASE_DIR / ".env"
 
-# Get the file if it's exists
-if env_file_path.exists():
-    env.read_env(env_file_path)
-    print("DEBUG: .env file found and read successfully.")
+if env_file.exists():
+    env.read_env(env_file)
+    print(f"DEBUG: .env file loaded from {env_file}")
 else:
-    print(f".env file not found at {env_file_path}")
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
+    print("WARNING: No .env file found, using environment variables")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-h$uss@2$lyux&yhu+ma_yf)-fqt$sh-hr)qr0j6e-o7e7l=11i'

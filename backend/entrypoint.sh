@@ -5,18 +5,31 @@ set -e
 
 echo "Starting Django container entrypoint..."
 
-# Use a Python scriptlet for reliable TCP port checking
+# Wait for Postgres to be ready
 echo "Waiting for Postgres to be ready on '$POSTGRES_HOST', $POSTGRES_PORT..."
 
-# Python code to check if a TCP connection is possible
-until python3 -c "import socket; s = socket.socket(
-    socket.AF_INET, socket.SOCK_STREAM);
-    s.connect(('$POSTGRES_HOST', $POSTGRES_PORT)); s.close()" > /dev/null 2>&1; do
+until python3 -c "
+import psycopg2
+import sys
+import os
+try:
+    conn = psycopg2.connect(
+        dbname=os.environ['POSTGRES_DB'],
+        user=os.environ['POSTGRES_USER'],
+        password=os.environ['POSTGRES_PASSWORD'],
+        host=os.environ['POSTGRES_HOST'],
+        port=os.environ['POSTGRES_PORT']
+    )
+    conn.close()
+    sys.exit(0)
+except psycopg2.OperationalError:
+    sys.exit(1)
+" 2>/dev/null; do
   echo "Postgres is unavailable - sleeping"
   sleep 1
 done
 
-echo "Postgres is up - continuing..."
+echo "Postgres is up and database is accessible - continuing..."
 
 # Show migration plan
 echo "Migration plan:"
