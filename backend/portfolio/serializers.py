@@ -1,6 +1,8 @@
 from rest_framework import serializers
-from .models import Profile
+from .models import Profile, Projects, Tech
 from django.contrib.auth.models import User
+
+# Profile serializer
 class ProfileSerializer(serializers.ModelSerializer):
     # Expose User fields
     first_name = serializers.CharField(source='user.first_name')
@@ -10,24 +12,22 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['first_name', 'last_name', 'email', 'intro', 'image']
-
+        
+    # create a new user object
     def create(self, validated_data):
         user_data = validated_data.pop('user')
-        
-        # create a new user object
-        def create(self, validated_data):
-            user_data = validated_data.pop('user')
-            user, created = User.objects.get_or_create(
-                email=user_data['email'],
-                defaults={
-                    'first_name': user_data.get('first_name', ''),
-                    'last_name': user_data.get('last_name', ''),
-                    'username': user_data.get('email'),
-                }
-            )
-            profile, created = Profile.objects.get_or_create(user=user, defaults=validated_data)
-            return profile
+        user, created = User.objects.get_or_create(
+            email=user_data['email'],
+            defaults={
+                'first_name': user_data.get('first_name', ''),
+                'last_name': user_data.get('last_name', ''),
+                'username': user_data.get('email'),
+            }
+        )
+        profile, created = Profile.objects.get_or_create(user=user, defaults=validated_data)
+        return profile
 
+    # Update existing one
     def update(self, instance, validated_data):
         # Extract nested user data
         user_data = validated_data.pop('user', {})
@@ -44,3 +44,21 @@ class ProfileSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+
+# Projects serializer
+class ProjectsSerializer(serializers.ModelSerializer):
+    tech = serializers.SlugRelatedField(
+        queryset=Tech.objects.all(),
+        many=True,
+        slug_field='name',
+    )
+    main_tech = serializers.SlugRelatedField(
+        queryset=Tech.objects.all(),
+        many=True,
+        slug_field='name',
+    )
+
+    class Meta:
+        model = Projects
+        fields = ['name', 'intro', 'docs', 'image', 'tech', 'main_tech']
+
