@@ -16,7 +16,7 @@ def landing_api(request):
 class ProfileList(generics.ListAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [IsAdminOrOwner]
 
 
 # Profile detail 
@@ -24,7 +24,7 @@ class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
     lookup_field = 'pk'
-    permission_classes = [IsAdminOrOwner]
+    permission_classes = [permissions.IsAuthenticated]
 
 
 # Projects List and create
@@ -32,3 +32,11 @@ class ProjectsListCreate(generics.ListCreateAPIView):
     queryset = Projects.objects.all()
     serializer_class = ProjectsSerializer
     permission_classes = [IsAdminOrOwner]
+
+
+# Projects detail
+class ProjectsDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Projects.objects.all()
+    serializer_class = ProjectsSerializer
+    permission_classes = [IsAdminOrOwner]
+    lookup_field = 'pk'
