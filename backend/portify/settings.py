@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 import environ
+import sys
 
 # Initialize environ
 env = environ.Env()
@@ -36,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # Third-party
+    'rest_framework',
     
     # Local
     "portfolio",
@@ -56,7 +58,7 @@ ROOT_URLCONF = 'portify.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,23 +76,35 @@ WSGI_APPLICATION = 'portify.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+# Default: Postgres from env
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('POSTGRES_DB'),
-        'USER': env('POSTGRES_USER'),
-        'PASSWORD': env('POSTGRES_PASSWORD'),
-        'HOST': env('POSTGRES_HOST'),
+        'NAME': env('POSTGRES_DB', default='postgres'),
+        'USER': env('POSTGRES_USER', default='postgres'),
+        'PASSWORD': env('POSTGRES_PASSWORD', default=''),
+        'HOST': env('POSTGRES_HOST', default='localhost'),
         'PORT': env('POSTGRES_PORT', cast=int, default=5432),
     }
 }
 
-# --- ADD THESE LINES NOW ---
-print("\n--- Database Configuration Loaded ---")
-print(f"Database Name: {DATABASES['default']['NAME']}")
-print(f"Database Host: {DATABASES['default']['HOST']}")
-print(f"Database Port: {DATABASES['default']['PORT']}")
-print("-----------------------------------\n")
+# Use SQLite for tests to avoid external dependencies
+if 'test' in sys.argv or 'pytest' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:',
+        }
+    }
+    print("Using in-memory SQLite database for tests")
+
+# Only print DB details when not in tests
+if DATABASES['default']['ENGINE'] != 'django.db.backends.sqlite3':
+    print("\n--- Database Configuration Loaded ---")
+    print(f"Database Name: {DATABASES['default']['NAME']}")
+    print(f"Database Host: {DATABASES['default']['HOST']}")
+    print(f"Database Port: {DATABASES['default']['PORT']}")
+    print("-----------------------------------\n")
 
 
 # Password validation
@@ -128,3 +142,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Images and documents for local dev
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
