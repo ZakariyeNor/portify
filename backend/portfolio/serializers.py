@@ -15,7 +15,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ['first_name', 'last_name', 'email', 'intro', 'image']
+        fields = ['id', 'first_name', 'last_name', 'email', 'intro', 'image']
         
     # create a new user object
     def create(self, validated_data):
@@ -64,7 +64,7 @@ class ProjectsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Projects
-        fields = ['name', 'intro', 'docs', 'image', 'tech', 'main_tech']
+        fields = ['id', 'name', 'intro', 'docs', 'image', 'tech', 'main_tech']
 
 """ Skills serializers """
 
@@ -115,4 +115,4 @@ class SkillCategorySerializer(serializers.ModelSerializer):
 class CertificateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Certificate
-        fields = ['name', 'image', 'resume']
+        fields = ['id', 'name', 'image', 'resume']
