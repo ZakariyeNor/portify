@@ -13,7 +13,7 @@ class Profile(models.Model):
 # Tech used badges
 TECH_CHOICES = [
     ('nextjs', 'Next.js'),
-    ('nextauth', 'NextAuth'),
+    ('designthinking', 'Design Thinking'),
     ('react', 'React'),
     ('typescript', 'TypeScript'),
     ('tailwindcss', 'Tailwind CSS'),
@@ -63,7 +63,6 @@ class Tech(models.Model):
     def __str__(self):
         return self.name
 
-# Ma
 # Projects model
 class Projects(models.Model):
     name = models.CharField(unique=True, blank=False, null=False, max_length=50)
@@ -84,3 +83,41 @@ class Projects(models.Model):
     
     def __str__(self):
         return f"The project {self.name} | created at {self.created_at}"
+
+# Education model
+class Education(models.Model):
+    course = models.CharField(max_length=255)
+    school = models.CharField(max_length=255)
+    period = models.CharField(max_length=100)  # e.g. "2022 - 2024"
+
+    def __str__(self):
+        return f"{self.course} | {self.school}"
+
+# Skill categories
+class SkillCategory(models.Model):
+    title = models.CharField(max_length=200)
+
+    class Meta:
+        verbose_name_plural = "Skill Categories"
+    
+    def __str__(self):
+        return self.title
+
+# Skills model
+class Skill(models.Model):
+    category = models.ForeignKey(
+        SkillCategory, related_name='skills', on_delete=models.CASCADE
+    )
+    name = models.CharField(max_length=150)
+    
+    def __str__(self):
+        return self.name
+
+# Certivicates
+class Certificate(models.Model):
+    name = models.CharField(max_length=255, blank=True)
+    image = models.ImageField(upload_to="documents/certificates/")
+    resume = models.FileField(upload_to="documents/resume/", blank=True, null=True)
+    
+    def __str__(self):
+        return f"{self.name} | certificate"
