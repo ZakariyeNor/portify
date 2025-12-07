@@ -99,10 +99,36 @@ class EductationDetails(generics.RetrieveUpdateDestroyAPIView):
 
 
 # Categories List and create
+class CategoriesListCreate(generics.ListCreateAPIView):
+    queryset = SkillCategory.objects.all()
+    serializer_class = SkillCategorySerializer
+    permission_classes = [IsAdminOrOwner]
+
+
 # Categories update and delete
+class CategoriesDetails(generics.RetrieveUpdateDestroyAPIView):
+    queryset = SkillCategory.objects.all()
+    serializer_class = SkillCategorySerializer
+    permission_classes = [permissions.IsAuthenticated]
+    lookup_field = 'pk'
+
 
 # Skill List and create
+class SkillListCreate(generics.ListCreateAPIView):
+    queryset = Skill.objects.all()
+    serializer_class = SkillSerializer
+    permission_classes = [IsAdminOrOwner]
+
+
 # Skill update and delete
+class SkillDetails(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Skill.objects.all()
+    serializer_class = SkillSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    lookup_field = 'pk'
+
 
 # Certivicate List and create
 # Certivicate update and delete
+
+
