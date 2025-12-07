@@ -81,13 +81,31 @@ class EducationSerializer(serializers.ModelSerializer):
 
 # Skill serializers
 class SkillSerializer(serializers.ModelSerializer):
+    category_name = serializers.PrimaryKeyRelatedField(
+        queryset=SkillCategory.objects.all(), write_only=True
+    )
+    category = serializers.StringRelatedField(read_only=True)  # show category name
+
     class Meta:
         model = Skill
-        fields = ['name']
+        fields = ['id', 'name', 'category', 'category_name']
 
-# Skill category serializers
+    def create(self, validated_data):
+        category = validated_data.pop('category_name')
+        return Skill.objects.create(category=category, **validated_data)
+
+    def update(self, instance, validated_data):
+        category = validated_data.pop('category_name', None)
+        if category:
+            instance.category = category
+        instance.name = validated_data.get('name', instance.name)
+        instance.save()
+        return instance
+
+# SkillCategorySerializer (nested skills for unified view)
 class SkillCategorySerializer(serializers.ModelSerializer):
-    skills = SkillSerializer(many=True, read_only=True)
+    skills = SkillSerializer(many=True, read_only=True)  # uses SkillSerializer
+
     class Meta:
         model = SkillCategory
         fields = ['id', 'title', 'skills']

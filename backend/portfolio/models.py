@@ -107,6 +107,7 @@ class SkillCategory(models.Model):
 
     class Meta:
         verbose_name_plural = "Skill Categories"
+        unique_together = ('title',)
     
     def __str__(self):
         return self.title
@@ -117,6 +118,9 @@ class Skill(models.Model):
         SkillCategory, related_name='skills', on_delete=models.CASCADE
     )
     name = models.CharField(max_length=150)
+    
+    class Meta:
+        unique_together = ('name',)
     
     def __str__(self):
         return self.name
