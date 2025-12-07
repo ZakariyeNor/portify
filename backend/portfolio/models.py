@@ -146,3 +146,22 @@ class Contact(models.Model):
         ordering = ['-created_at']
     def __str__(self):
         return f"Email from {self.name} | {self.created_at}"
+
+# Vision models
+class Visons(models.Model):
+    title = models.CharField()
+    vision_intro = models.TextField()
+    principles_title = models.CharField()
+    principles_text = models.TextField()
+    long_term_date = models.DateField(default=timezone.now, blank=True)
+    long_term_title = models.CharField()
+    long_term_text = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now, blank=True)
+    updated_at = models.DateTimeField(default=timezone.now, blank=True)
+    
+    class Meta:
+        verbose_name_plural = 'Visons'
+    
+    def __str__(self):
+        return f"{self.title} | {self.created_at}"
+    
