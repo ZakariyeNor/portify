@@ -26,7 +26,7 @@ class TechAdmin(admin.ModelAdmin):
 # --- EDUCATION ---
 @admin.register(Education)
 class EducationAdmin(admin.ModelAdmin):
-    list_display = ("course", "school")
+    list_display = ("course", "school", "end_date")
     search_fields = ("course", "school")
     list_filter = ("school",)
     ordering = ("course",)

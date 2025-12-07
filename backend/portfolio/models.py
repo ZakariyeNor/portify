@@ -88,11 +88,19 @@ class Projects(models.Model):
 class Education(models.Model):
     course = models.CharField(max_length=255)
     school = models.CharField(max_length=255)
-    period = models.CharField(max_length=100)  # e.g. "2022 - 2024"
+    start_date = models.DateField(default=timezone.now)
+    end_date = models.DateField(default=timezone.now)
 
-    def __str__(self):
-        return f"{self.course} | {self.school}"
-
+    class Meta:
+        unique_together = ('course', 'start_date', 'end_date')
+    
+    @property
+    def period(self):
+        return f"{self.start_date} - {self.end_date}"
+   
+    def __str__(self, obj):
+        return f"{obj.course} | {obj.school}"
+    
 # Skill categories
 class SkillCategory(models.Model):
     title = models.CharField(max_length=200)
