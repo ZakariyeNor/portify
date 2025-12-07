@@ -1,8 +1,12 @@
 from rest_framework import serializers
-from .models import Profile, Projects, Tech
+from .models import (
+    Profile, Projects, Tech,
+    Education, SkillCategory, Skill,
+    Certificate
+)
 from django.contrib.auth.models import User
 
-# Profile serializer
+""" Profile serializer """
 class ProfileSerializer(serializers.ModelSerializer):
     # Expose User fields
     first_name = serializers.CharField(source='user.first_name')
@@ -45,7 +49,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
         return instance
 
-# Projects serializer
+""" Projects serializer """
 class ProjectsSerializer(serializers.ModelSerializer):
     tech = serializers.SlugRelatedField(
         queryset=Tech.objects.all(),
@@ -62,3 +66,35 @@ class ProjectsSerializer(serializers.ModelSerializer):
         model = Projects
         fields = ['name', 'intro', 'docs', 'image', 'tech', 'main_tech']
 
+""" Skills serializers """
+
+# Education serializer
+class EducationSerializer(serializers.ModelSerializer):
+    period = serializers.SerializerMethodField(read_only=True)
+    
+    class Meta:
+        model = Education
+        fields = ['id', 'course', 'school', 'start_date', 'end_date', 'period']
+
+    def get_period(self, obj):
+        return f"{obj.start_date} - {obj.end_date}"
+
+# Skill serializers
+class SkillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Skill
+        fields = ['name']
+
+# Skill category serializers
+class SkillCategorySerializer(serializers.ModelSerializer):
+    skills = SkillSerializer(many=True, read_only=True)
+    class Meta:
+        model = SkillCategory
+        fields = ['id', 'title', 'skills']
+
+
+# Certificate serializers
+class CertificateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Certificate
+        fields = ['name', 'image', 'resume']
