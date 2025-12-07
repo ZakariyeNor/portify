@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import (
     Profile, Projects, Tech,
     Education, SkillCategory, Skill,
-    Certificate
+    Certificate, Contact
 )
 from django.contrib.auth.models import User
 
@@ -116,3 +116,12 @@ class CertificateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Certificate
         fields = ['id', 'name', 'image', 'resume']
+
+
+""" Contact """
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = [
+            'id', 'name', 'subject', 'email', 'message'
+        ]

@@ -1,26 +1,28 @@
 from django.contrib import admin
-from .models import Profile, Projects, Tech
-from .models import Education, SkillCategory, Skill, Certificate
+from .models import (
+    Profile, Projects, Tech,
+    Education, SkillCategory, Skill,
+    Certificate, Contact
+)
 
-# Register Profile model in admin.
+# --- Register Profile model in admin. ---
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     search_fields = 'username'
     search_fields = ['username']
 
-# Create an Admin class for Projects to customize its appearance
+# --- Create an Admin class for Projects to customize its appearance ---
 @admin.register(Projects)
 class ProjectsAdmin(admin.ModelAdmin):
     filter_horizontal = ('tech', 'main_tech',) 
     list_display = ('name', 'created_at',)
 
-# Register the tech
+# --- Register the tech ---
 @admin.register(Tech)
 class TechAdmin(admin.ModelAdmin):
     list_display = ("get_name_display",)
     search_fields = ("name", "slug")
     ordering = ("name",)
-
 
 
 # --- EDUCATION ---
@@ -64,3 +66,9 @@ class CertificateAdmin(admin.ModelAdmin):
     list_display = ("name",)
     search_fields = ("name",)
     ordering = ("name",)
+
+# --- Contacts ---
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('name', 'created_at')
+    list_filter = ['created_at']

@@ -1,6 +1,11 @@
 from django.urls import path
 from .. import views
 
+from rest_framework.routers import DefaultRouter
+
+# Contact_us
+router = DefaultRouter()
+router.register(r'contact_us', views.ContactView, basename='contact')
 
 urlpatterns = [
     # Profile
@@ -28,8 +33,7 @@ urlpatterns = [
     
     # Certificates
     path('certificates/', views.CertificateListCreate.as_view(), name='certificates-list'),
-    path('certificates/<int:pk>/', views.CertificateDetails.as_view(), name='certificate-details'),
-    
-    
+    path('certificates/<int:pk>/', views.CertificateDetails.as_view(), name='certificate-details'),    
 ]
 
+urlpatterns = router.urls
