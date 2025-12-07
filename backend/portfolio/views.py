@@ -129,6 +129,14 @@ class SkillDetails(generics.RetrieveUpdateDestroyAPIView):
 
 
 # Certivicate List and create
+class CertificateListCreate(generics.ListCreateAPIView):
+    queryset = Certificate.objects.all()
+    serializer_class = CertificateSerializer
+    permission_classes = [IsAdminOrOwner]
+
 # Certivicate update and delete
-
-
+class CertificateDetails(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Certificate.objects.all()
+    serializer_class = CertificateSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    lookup_field = 'pk'

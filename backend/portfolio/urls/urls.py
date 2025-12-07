@@ -26,6 +26,10 @@ urlpatterns = [
     path('skills/', views.SkillListCreate.as_view(), name='skills-list'),
     path('skills/<int:pk>/', views.SkillDetails.as_view(), name='skill-details'),
     
+    # Certificates
+    path('certificates/', views.CertificateListCreate.as_view(), name='certificates-list'),
+    path('certificates/<int:pk>/', views.CertificateDetails.as_view(), name='certificate-details'),
+    
     
 ]
 
