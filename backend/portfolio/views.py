@@ -1,17 +1,18 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, viewsets
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .models import (
     Profile, Projects, Education,
-    SkillCategory, Skill, Certificate
+    SkillCategory, Skill, Certificate,
+    Contact
 )
 from .serializers import (
     ProfileSerializer, ProjectsSerializer,
     EducationSerializer, SkillCategorySerializer,
-    SkillSerializer, CertificateSerializer
+    SkillSerializer, CertificateSerializer, ContactSerializer
 )
 
 from .permissions import IsAdminOrOwner
@@ -140,3 +141,10 @@ class CertificateDetails(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CertificateSerializer
     permission_classes = [permissions.IsAuthenticated]
     lookup_field = 'pk'
+
+
+# Contact endpoint
+class ContactView(viewsets.ModelViewSet):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
+    permission_classes = [IsAdminOrOwner]

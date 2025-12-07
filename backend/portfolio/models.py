@@ -133,3 +133,16 @@ class Certificate(models.Model):
     
     def __str__(self):
         return f"{self.name} | certificate"
+
+# Contacts
+class Contact(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField(blank=False, null=False)
+    subject = models.CharField(blank=False, null=False)
+    message = models.TextField(blank=False, null=False)
+    created_at = models.DateTimeField(default=timezone.now, blank=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+    def __str__(self):
+        return f"Email from {self.name} | {self.created_at}"
