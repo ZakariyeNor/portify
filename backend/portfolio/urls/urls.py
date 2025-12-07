@@ -3,9 +3,12 @@ from .. import views
 
 from rest_framework.routers import DefaultRouter
 
-# Contact_us
+# Contact us endpoints
 router = DefaultRouter()
 router.register(r'contact_us', views.ContactView, basename='contact')
+
+# Visons endpoint
+router.register(r'visons', views.VisionView, basename='visions')
 
 urlpatterns = [
     # Profile

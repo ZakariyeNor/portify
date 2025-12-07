@@ -7,12 +7,13 @@ from rest_framework.response import Response
 from .models import (
     Profile, Projects, Education,
     SkillCategory, Skill, Certificate,
-    Contact
+    Contact, Visons
 )
 from .serializers import (
     ProfileSerializer, ProjectsSerializer,
     EducationSerializer, SkillCategorySerializer,
-    SkillSerializer, CertificateSerializer, ContactSerializer
+    SkillSerializer, CertificateSerializer, ContactSerializer,
+    VisionsSerializer
 )
 
 from .permissions import IsAdminOrOwner
@@ -147,4 +148,10 @@ class CertificateDetails(generics.RetrieveUpdateDestroyAPIView):
 class ContactView(viewsets.ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
+    permission_classes = [permissions.IsAuthenticated, IsAdminOrOwner]
+
+# Visions model
+class VisionView(viewsets.ModelViewSet):
+    queryset = Visons.objects.all()
+    serializer_class = VisionsSerializer
     permission_classes = [IsAdminOrOwner]

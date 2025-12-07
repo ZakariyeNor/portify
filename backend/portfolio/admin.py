@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import (
     Profile, Projects, Tech,
     Education, SkillCategory, Skill,
-    Certificate, Contact
+    Certificate, Contact, Visons
 )
 
 # --- Register Profile model in admin. ---
@@ -72,3 +72,10 @@ class CertificateAdmin(admin.ModelAdmin):
 class ContactAdmin(admin.ModelAdmin):
     list_display = ('name', 'created_at')
     list_filter = ['created_at']
+
+# --- Visions ---
+@admin.register(Visons)
+class VisionsAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created_at')
+    list_filter = ('updated_at',)
+    ordering = ("title",)
