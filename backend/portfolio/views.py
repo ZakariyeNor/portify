@@ -19,6 +19,8 @@ from .serializers import (
 from .permissions import IsAdminOrOwner
 from rest_framework import permissions
 
+from rest_framework import status
+from .tasks import send_contact_email
 # Hidden landing page
 def landing_api(request):
     return render(
@@ -149,6 +151,31 @@ class ContactView(viewsets.ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
     permission_classes = [permissions.IsAuthenticated, IsAdminOrOwner]
+    
+    def get_permissions(self):
+        """
+            Allow unauthenticated users to send contacts form
+        """
+        if self.action == "create":
+            return [permissions.AllowAny()]
+        return super().get_permissions()
+    
+    # serialize contatct data
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        contact = serializer.save()
+        
+        # Dispatch Celery task
+        send_contact_email.delay(
+            name=contact.name,
+            email=contact.email,
+            subject=contact.subject,
+            message=contact.message,
+            contact_id=contact.id,
+        )
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 # Visions model
 class VisionView(viewsets.ModelViewSet):
