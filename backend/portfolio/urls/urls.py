@@ -39,4 +39,4 @@ urlpatterns = [
     path('certificates/<int:pk>/', views.CertificateDetails.as_view(), name='certificate-details'),    
 ]
 
-urlpatterns = router.urls
+urlpatterns += router.urls
