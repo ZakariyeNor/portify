@@ -21,6 +21,11 @@ from rest_framework import permissions
 
 from rest_framework import status
 from .tasks import send_contact_email
+
+from django.core.cache import cache
+from django.conf import settings
+
+
 # Hidden landing page
 def landing_api(request):
     return render(
@@ -28,12 +33,14 @@ def landing_api(request):
         'landing/front.html',
     )
 
+# Chache limittime
+CACHE_TTL = getattr(settings, "CACHE_TTL", 60 * 1) # one minute chaching
+
 # Profile api view
 class ProfileList(generics.ListAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
     permission_classes = [IsAdminOrOwner]
-
 
 # Profile detail 
 class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -41,22 +48,66 @@ class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProfileSerializer
     lookup_field = 'pk'
     permission_classes = [permissions.IsAuthenticated]
-
-
-# Projects List and create
+    
+# Projects List and Create
 class ProjectsListCreate(generics.ListCreateAPIView):
     queryset = Projects.objects.all()
     serializer_class = ProjectsSerializer
     permission_classes = [IsAdminOrOwner]
 
+    # Cache list
+    def list(self, request, *args, **kwargs):
+        cache_key = "project_list"
+        cached_data = cache.get(cache_key)
+        
+        if cached_data:
+            print(f"[CACHE HIT] Projects list fetched from cache.")
+            return Response(cached_data)
+        
+        response = super().list(request, *args, **kwargs)
+        cache.set(cache_key, response.data, timeout=CACHE_TTL)
+        print(f"[CACHE SET] Projects list cached with key '{cache_key}'.")
+        return response
 
-# Projects detail
+
+# Projects Detail
 class ProjectsDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Projects.objects.all()
     serializer_class = ProjectsSerializer
     permission_classes = [IsAdminOrOwner]
     lookup_field = 'pk'
 
+    # Cache retrieved objects
+    def retrieve(self, request, *args, **kwargs):
+        cache_key = f"project_{kwargs['pk']}"
+        cached_data = cache.get(cache_key)
+        
+        if cached_data:
+            print(f"[CACHE HIT] Project {kwargs['pk']} fetched from cache.")
+            return Response(cached_data)
+        
+        response = super().retrieve(request, *args, **kwargs)
+        cache.set(cache_key, response.data, timeout=CACHE_TTL)
+        print(f"[CACHE SET] Project {kwargs['pk']} cached with key '{cache_key}'.")
+        return response
+    
+    # Update and delete cached data
+    def update(self, request, *args, **kwargs):
+        response = super().update(request, *args, **kwargs)
+        cache_key = f"project_{kwargs['pk']}"
+        cache.delete(cache_key)
+        cache.delete("project_list")
+        print(f"[CACHE DELETE] Project {kwargs['pk']} and project list caches cleared.")
+        return response
+
+    # Delete and reset cached data of the main project list
+    def destroy(self, request, *args, **kwargs):
+        response = super().destroy(request, *args, **kwargs)
+        cache_key = f"project_{kwargs['pk']}"
+        cache.delete(cache_key)
+        cache.delete("project_list")
+        print(f"[CACHE DELETE] Project {kwargs['pk']} and project list caches cleared (deleted).")
+        return response
 """
     Skills page views & individual CRUD endpoints 
     for Education, Skill, SkillCategory, and Certificates
