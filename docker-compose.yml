@@ -16,12 +16,15 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      redis:
+       condition: service_healthy
     entrypoint: /app/entrypoint.sh
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/"]
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
   # Database
   db:
     image: postgres:15
@@ -41,6 +44,37 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
+  # Redis
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+  # Celery
+  celery:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: celery_worker
+    command: celery -A portify worker --loglevel=info -Q default
+    env_file:
+      - .env
+    volumes:
+      - ./backend:/app
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+    restart: unless-stopped
 
 volumes:
   postgres_data:

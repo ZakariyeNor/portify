@@ -146,3 +146,32 @@ STATIC_URL = 'static/'
 # Images and documents for local dev
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+# CELERY conf
+CELERY_BROKER_URL = env("CELERY_BROKER_URL", default="redis://redis:6379/0")
+CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND", default="redis://redis:6379/0")
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+
+print("CELERY_BROKER_URL =", CELERY_BROKER_URL)
+print("CELERY_RESULT_BACKEND =", CELERY_RESULT_BACKEND)
+
+# Email
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = env("EMAIL_HOST", default="smtp.gmail.com")
+EMAIL_PORT = int(env("EMAIL_PORT", default=587))
+EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
+EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="no-reply@portify.com")
+CONTACT_RECIPIENT_EMAIL = env("CONTACT_RECIPIENT_EMAIL", default="zakilenor@gmail.com")
+
+
+print("EMAIL_HOST =", EMAIL_HOST)
+print("EMAIL_PORT =", EMAIL_PORT)
+print("EMAIL_HOST_USER =", EMAIL_HOST_USER)
+print("EMAIL_HOST_PASSWORD =", EMAIL_HOST_PASSWORD)
+print("EMAIL_USE_TLS =", EMAIL_USE_TLS)
+print("DEFAULT_FROM_EMAIL =", DEFAULT_FROM_EMAIL)
+print("CONTACT_RECIPIENT_EMAIL =", CONTACT_RECIPIENT_EMAIL)
