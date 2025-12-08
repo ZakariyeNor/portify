@@ -63,7 +63,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: celery_worker
-    command: celery -A portify worker --loglevel=info -Q default
+    command: celery -A portify worker --loglevel=info
     env_file:
       - .env
     volumes:
