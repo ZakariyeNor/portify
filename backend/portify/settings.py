@@ -175,3 +175,16 @@ print("EMAIL_HOST_PASSWORD =", EMAIL_HOST_PASSWORD)
 print("EMAIL_USE_TLS =", EMAIL_USE_TLS)
 print("DEFAULT_FROM_EMAIL =", DEFAULT_FROM_EMAIL)
 print("CONTACT_RECIPIENT_EMAIL =", CONTACT_RECIPIENT_EMAIL)
+
+
+# Caching with redis
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": env("REDIS_URL", default="redis://redis:6379/1"),
+        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+    }
+}
+
+# Timeout
+CACHE_TTL = 60 * 1 
