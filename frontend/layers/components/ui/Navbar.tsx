@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 import { BsBarChartSteps } from 'react-icons/bs'
 import { RiMenu2Line } from 'react-icons/ri'
+import Button from './Button'
 
 const DesNav = () => {
 
@@ -75,7 +76,17 @@ const DesNav = () => {
                 </div>
 
                 <div className="md:block">
-                    <a className="btn bg-blue-600 text-white rounded-lg">Contact Me</a>
+                    <Link
+                        href='/'
+                        className="bg-blue-600 text-white rounded-lg action">
+                            <Button
+                                label='Contact Me'
+                                type='button'
+                                className='action'
+                                onClick={() => console.log('Contact me')}
+                                variant='primary'
+                            />
+                    </Link>
                 </div>
             </div>
         </div>

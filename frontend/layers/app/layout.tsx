@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat, Open_Sans, Lato } from "next/font/google";
 import "./globals.css";
-import DesNav from "@/components/globals/Navbar";
+import DesNav from "@/components/ui/Navbar";
 
 
 // Headers fonts
