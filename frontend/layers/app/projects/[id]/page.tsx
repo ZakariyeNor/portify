@@ -1,8 +1,12 @@
 import React from 'react'
+import ProjectDetails from './ProjectDetails'
+
 
 const ProjectDetailPage = () => {
   return (
-    <div>ProjectDetailPage</div>
+    <div className="">
+      <ProjectDetails />
+    </div>
   )
 }
 
