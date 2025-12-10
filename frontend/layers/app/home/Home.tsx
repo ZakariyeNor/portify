@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import Button from '../ui/Button'
+import Button from '../components/ui/Button'
 import { FaGithub } from 'react-icons/fa'
 import { RiTwitterFill } from 'react-icons/ri'
 import { MdApps } from 'react-icons/md'
