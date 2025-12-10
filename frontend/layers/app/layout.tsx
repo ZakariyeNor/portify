@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat, Open_Sans, Lato } from "next/font/google";
 import "./globals.css";
-import DesNav from "@/components/ui/Navbar";
+import Navigation from "./components/ui/Navbar";
 
 
 // Headers fonts
@@ -41,7 +41,7 @@ export default function RootLayout({
       <body
         className={`${Headers.variable} ${Body.variable} ${Action.variable} antialiased`}
       >
-        <DesNav />
+        <Navigation />
         {children}
       </body>
     </html>

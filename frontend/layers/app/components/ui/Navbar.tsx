@@ -5,7 +5,7 @@ import { BsBarChartSteps } from 'react-icons/bs'
 import { RiMenu2Line } from 'react-icons/ri'
 import Button from './Button'
 
-const DesNav = () => {
+const Navigation = () => {
 
     const [open, setOpen] = useState(false);
     const [active, setActive] = useState("Home");
@@ -93,4 +93,4 @@ const DesNav = () => {
     )
 }
 
-export default DesNav
+export default Navigation
