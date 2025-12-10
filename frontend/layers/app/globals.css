@@ -21,25 +21,6 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
-.marquee {
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.marquee .badges {
-  padding-left: 100%;
-  animation: scroll-left 10s linear infinite;
-}
-
-@keyframes scroll-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
 /* Homepage icons */
 .icons {
   @apply bg-slate-200/80 text-black hover:bg-gray-400 font-bold cursor-pointer;
