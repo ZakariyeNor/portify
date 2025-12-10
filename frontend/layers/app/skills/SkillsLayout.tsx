@@ -105,7 +105,7 @@ const SkillsPage = () => {
           ].map((src, idx) => (
             <div
               key={idx}
-              className="carousel-item flex-shrink-0 w-[80%] sm:w-[60%] md:w-[45%] lg:w-[22%]"
+              className="carousel-item shrink-0 w-[80%] sm:w-[60%] md:w-[45%] lg:w-[22%]"
             >
               <img
                 src={src}

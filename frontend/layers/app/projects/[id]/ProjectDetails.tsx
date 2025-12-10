@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { IoCodeOutline } from "react-icons/io5";
 import { IoIosCode } from 'react-icons/io'
 
+
 const ProjectDetails = () => {
     return (
         <>
