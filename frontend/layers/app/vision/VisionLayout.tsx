@@ -110,7 +110,7 @@ const VisionLayout = () => {
             experiences is at the core of my process.
           </p>
         </div>
-        
+
       </div>
 
       {/* Long-term goals */}
