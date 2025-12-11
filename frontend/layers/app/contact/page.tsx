@@ -20,7 +20,7 @@ export const metadata = {
 
 const ContactPage = () => {
   return (
-    <div className='bg-gray-100/20 min-h-screen'>
+    <div>
         <ContactLayout />
     </div>
   )

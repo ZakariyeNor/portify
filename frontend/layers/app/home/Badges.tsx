@@ -89,7 +89,7 @@ function Badges() {
     ];
 
     return (
-        <div className="m-4">
+        <div className="m-4 mt-auto pb-10">
             <Marquee gradient>
                 {badges.map((badge, idx) => (
                     <div className='badges' key={idx}>
