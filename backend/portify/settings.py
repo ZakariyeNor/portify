@@ -38,12 +38,15 @@ INSTALLED_APPS = [
     
     # Third-party
     'rest_framework',
+    'corsheaders',
     
     # Local
     "portfolio",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -187,4 +190,10 @@ CACHES = {
 }
 
 # Timeout
-CACHE_TTL = 60 * 1 
+CACHE_TTL = 60 * 5
+
+# CORS headers
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:3000",
+]
