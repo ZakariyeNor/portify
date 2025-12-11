@@ -40,7 +40,7 @@ CACHE_TTL = getattr(settings, "CACHE_TTL", 60 * 1) # one minute chaching
 class ProfileList(generics.ListAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = [IsAdminOrOwner]
+    permission_classes = [permissions.AllowAny]
 
 # Profile detail 
 class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
