@@ -6,7 +6,7 @@ import { MdEmail } from 'react-icons/md'
 
 const ContactLayout = () => {
     return (
-        <div className="flex flex-col justify-center items-center px-4 py-10 sm:py-16 lg:py-24">
+        <div className="flex flex-col justify-center items-center px-4 py-10 sm:py-16 lg:py-25 min-h-screen">
             {/* Intro */}
             <div className="flex flex-col items-center space-y-2 max-w-3xl text-center">
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold">

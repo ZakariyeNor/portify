@@ -10,9 +10,9 @@ const ProjectsLayout = () => {
     const [open, setOpen] = useState(false);
     
     return (
-        <>
+        <div className="flex flex-col sm:p-25 lg:p-25 min-h-screen">
             {/* Intro*/}
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-col space-y-2 ">
                 <h1 className="font-extrabold text-3xl">
                     My Work
                 </h1>
@@ -270,7 +270,7 @@ const ProjectsLayout = () => {
                     </Link>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
