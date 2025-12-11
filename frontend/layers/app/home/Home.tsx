@@ -11,7 +11,7 @@ import Badges from './Badges'
 const HomePage = () => {
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col min-h-screen">
             <div className="flex flex-col-reverse lg:flex lg:flex-row sm:m-10 sm:p-5 lg:m-20 lg:p-10 justify-between items-center h-full">
                 {/* Right side the content */}
                 <div className="flex flex-col spece-y-3 w-full lg:w-[50%] p-6">

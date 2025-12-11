@@ -5,7 +5,7 @@ import { VscDebugBreakpointData } from 'react-icons/vsc'
 
 const SkillsPage = () => {
   return (
-    <div className="px-4 sm:px-8 lg:px-16 py-8">
+    <div className="flex flex-col p-15 lg:p-25 min-h-screen">
 
       {/* Intro */}
       <div className="flex flex-col space-y-4 relative">

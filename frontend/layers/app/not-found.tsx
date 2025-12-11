@@ -23,7 +23,8 @@ export const metadata = {
 
 const NotFound = () => {
     return (
-        <div className="flex flex-col justify-center items-center min-h-screen px-4 text-center space-y-8">
+        <div className="flex flex-col justify-center items-center 
+            min-h-screen px-4 text-center space-y-8">
 
             {/* Error Icon */}
             <MdError className='text-blue-700 text-9xl sm:text-[9rem]' />

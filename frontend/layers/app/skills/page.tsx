@@ -14,7 +14,7 @@ export const metadata = {
 
 const Skills = () => {
   return (
-    <div className='flex flex-col m-10 p-5 lg:m-15 lg:p-5 bg-gray-600/20'>
+    <div>
         <SkillsPage />
     </div>
   )

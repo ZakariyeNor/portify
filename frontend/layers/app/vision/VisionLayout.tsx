@@ -5,7 +5,7 @@ import Button from '../components/ui/Button'
 
 const VisionLayout = () => {
   return (
-    <div className="flex flex-col m-10 p-5 lg:m-15 lg:p-10 min-h-screen">
+    <div className="flex flex-col p-15 lg:p-25 min-h-screen">
       {/* Vision introduction */}
       <div className="flex flex-col justify-center items-center space-y-2 px-4 sm:px-8 lg:px-16">
         <p className="text-blue-500 text-xs sm:text-sm uppercase font-bold">
