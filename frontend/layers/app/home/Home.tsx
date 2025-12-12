@@ -20,7 +20,7 @@ interface userProfile {
 }
 
 
-const HomePage = ({first_name, last_name, email, intro, image}: userProfile) => {
+const HomePage = ({ first_name, last_name, email, intro, image }: userProfile) => {
 
     // State management
     const [userData, setUserData] = useState<userProfile[] | null>(null);
@@ -51,99 +51,103 @@ const HomePage = ({first_name, last_name, email, intro, image}: userProfile) => 
     }, [])
 
     // Show loading if fetching
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <p className='flex justify-center items-center min-h-screen
+            text-blue-600 font-extrabold text-6xl'>
+                Loading...
+            </p>;
 
     // Show error
-    if (error) return <p>{error.join(", ")}</p>;
+    if (error) return <p className='flex justify-center items-center min-h-screen
+        text-red-500 font-extrabold text-3xl'>{error.join(", ")}</p>;
 
     return (
         <div className="flex flex-col min-h-screen">
             <div className="flex flex-col-reverse lg:flex lg:flex-row sm:m-10 sm:p-5 lg:m-20 lg:p-10 justify-between items-center h-full">
                 {/* Right side the content */}
                 {userData && (
-                <>
-                    <div className="flex flex-col spece-y-3 w-full lg:w-[50%] p-6">
-                        <h1 className="font-extrabold text-4xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl">
-                            {userData[0].first_name} {userData[0].last_name}
-                        </h1>
+                    <>
+                        <div className="flex flex-col spece-y-3 w-full lg:w-[50%] p-6">
+                            <h1 className="font-extrabold text-4xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl">
+                                {userData[0].first_name} {userData[0].last_name}
+                            </h1>
 
-                        <p className="text-blue-500 font-bold text-lg sm:text-xs md:text-base lg:text-xl xl:text-2xl pt-3">
-                            A Full-Stack Developer with DevOps Skills
-                        </p>
+                            <p className="text-blue-500 font-bold text-lg sm:text-xs md:text-base lg:text-xl xl:text-2xl pt-3">
+                                A Full-Stack Developer with DevOps Skills
+                            </p>
 
-                        <p className="text-gray-600 font-normal pt-4">
-                            {userData[0].intro}
-                        </p>
-                        <div className="pt-7 flex flex-row space-x-4">
-                            <Link href='/projects'>
-                                <Button
-                                    label='View My Work'
-                                    type='button'
-                                    variant='primary'
-                                    className='action'
-                                    onClick={() => console.log('clicked the home primary button')}
-                                />
-                            </Link>
-                            
-                            <Link href='/contact'>
-                                <Button
-                                    label='Contact Me'
-                                    type='button'
-                                    variant='secondary'
-                                    className=''
-                                />
-                            </Link>
-                        </div>
+                            <p className="text-gray-600 font-normal pt-4">
+                                {userData[0].intro}
+                            </p>
+                            <div className="pt-7 flex flex-row space-x-4">
+                                <Link href='/projects'>
+                                    <Button
+                                        label='View My Work'
+                                        type='button'
+                                        variant='primary'
+                                        className='action'
+                                        onClick={() => console.log('clicked the home primary button')}
+                                    />
+                                </Link>
 
-                        {/* Icobns */}
-                        <div className="flex flex-col">
-                            <div className="flex flex-row pt-5 space-x-6">
-                                <div className="flex items-center justify-center h-12 w-12 rounded-full icons">
-                                    <Link href='https://github.com/ZakariyeNor' target='_blank' rel="noopener noreferrer">
-                                        <FaGithub className='h-6 w-9' />
-                                    </Link>
+                                <Link href='/contact'>
+                                    <Button
+                                        label='Contact Me'
+                                        type='button'
+                                        variant='secondary'
+                                        className=''
+                                    />
+                                </Link>
+                            </div>
+
+                            {/* Icobns */}
+                            <div className="flex flex-col">
+                                <div className="flex flex-row pt-5 space-x-6">
+                                    <div className="flex items-center justify-center h-12 w-12 rounded-full icons">
+                                        <Link href='https://github.com/ZakariyeNor' target='_blank' rel="noopener noreferrer">
+                                            <FaGithub className='h-6 w-9' />
+                                        </Link>
+                                    </div>
+                                    <div className="flex items-center justify-center h-12 w-12 rounded-full icons">
+                                        <Link href='https://x.com/zakariye_nor23' target='_blank' rel="noopener noreferrer">
+                                            <RiTwitterXLine className='h-6 w-9' />
+                                        </Link>
+                                    </div>
+                                    <div className="flex items-center justify-center h-12 w-12 rounded-full icons">
+                                        <Link href='https://www.linkedin.com/in/zaki-george-67648a39b/' target='_blank' rel="noopener noreferrer">
+                                            <FaLinkedin className='h-6 w-9 text-blue-600' />
+                                        </Link>
+                                    </div>
                                 </div>
-                                <div className="flex items-center justify-center h-12 w-12 rounded-full icons">
-                                    <Link href='https://x.com/zakariye_nor23' target='_blank' rel="noopener noreferrer">
-                                        <RiTwitterXLine className='h-6 w-9' />
-                                    </Link>
-                                </div>
-                                <div className="flex items-center justify-center h-12 w-12 rounded-full icons">
-                                    <Link href='https://www.linkedin.com/in/zaki-george-67648a39b/'  target='_blank' rel="noopener noreferrer">
-                                        <FaLinkedin className='h-6 w-9 text-blue-600' />
-                                    </Link>
+                                <div className="flex flex-row pt-1 space-x-4">
+                                    <p className="text-gray-800">Github</p>
+                                    <p className="text-gray-800">Twitter</p>
+                                    <p className="text-gray-800">Linkedin</p>
                                 </div>
                             </div>
-                            <div className="flex flex-row pt-1 space-x-4">
-                                <p className="text-gray-800">Github</p>
-                                <p className="text-gray-800">Twitter</p>
-                                <p className="text-gray-800">Linkedin</p>
-                            </div>
                         </div>
-                    </div>
 
 
-                    {/* Left side the image*/}
-                    <div className="flex justify-center items-center w-full lg:w-[50%] h-full p-6 mb-5">
-                        <div className="w-full sm:w-[80%] h-full 
+                        {/* Left side the image*/}
+                        <div className="flex justify-center items-center w-full lg:w-[50%] h-full p-6 mb-5">
+                            <div className="w-full sm:w-[80%] h-full 
                                 rounded-lg 
                                 lg:rounded-full 
                                 lg:shadow-lg">
-                            <Image
-                                src={userData[0].image}
-                                alt="Profile Photo"
-                                width={600}
-                                height={600}
-                                className="w-full h-auto rounded-lg lg:rounded-full shadow-xl/30 select-none"
-                                loading='eager'
-                                loader={({ src }) => src}
-                                unoptimized
-                                onContextMenu={(e) => e.preventDefault()}
-                                draggable={false}
+                                <Image
+                                    src={userData[0].image}
+                                    alt="Profile Photo"
+                                    width={600}
+                                    height={600}
+                                    className="w-full h-auto rounded-lg lg:rounded-full shadow-xl/30 select-none"
+                                    loading='eager'
+                                    loader={({ src }) => src}
+                                    unoptimized
+                                    onContextMenu={(e) => e.preventDefault()}
+                                    draggable={false}
                                 />
+                            </div>
                         </div>
-                    </div>
-                </>
+                    </>
                 )}
 
             </div>

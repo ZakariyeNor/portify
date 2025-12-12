@@ -64,7 +64,7 @@ class ProjectsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Projects
-        fields = ['id', 'name', 'intro', 'docs', 'image', 'tech', 'main_tech']
+        fields = ['id', 'name', 'intro', 'docs', 'image', 'category', 'tech', 'main_tech']
 
 """ Skills serializers """
 
