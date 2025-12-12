@@ -136,8 +136,7 @@ class UnifiedSkillsData(APIView):
     - Certificates
     - Skill Categories with nested Skills
     """
-    serializer_class = None
-    permission_classes = [IsAdminOrOwner]  
+    serializer_class = None 
     def get(self, request):
         data = {
             "education": EducationSerializer(

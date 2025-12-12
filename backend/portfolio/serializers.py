@@ -115,7 +115,7 @@ class SkillCategorySerializer(serializers.ModelSerializer):
 class CertificateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Certificate
-        fields = ['id', 'name', 'image', 'resume']
+        fields = ['id', 'name', 'image', 'resume', 'about']
 
 
 """ Contact """
