@@ -63,6 +63,15 @@ class Tech(models.Model):
     def __str__(self):
         return self.name
 
+# Categories
+CATEGORY_CHOICES = [
+    ('static', 'Static Websites'),
+    ('interactive', 'Interactive Frontend'),
+    ('cli', 'CLI Apps'),
+    ('fullstack', 'Full-Stack Web App'),
+    ('ecommerce', 'E-Commerce Web App'),
+]
+
 # Projects model
 class Projects(models.Model):
     name = models.CharField(unique=True, blank=False, null=False, max_length=50)
@@ -74,6 +83,11 @@ class Projects(models.Model):
         Tech,
         related_name="projects_main_tech",
         verbose_name="Main Technologies"
+    )
+    category = models.CharField(
+        max_length=20, 
+        choices=CATEGORY_CHOICES, 
+        default='static'
     )
     created_at = models.DateTimeField(default=timezone.now, blank=True)
     

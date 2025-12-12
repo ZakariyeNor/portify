@@ -53,7 +53,14 @@ class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
 class ProjectsListCreate(generics.ListCreateAPIView):
     queryset = Projects.objects.all()
     serializer_class = ProjectsSerializer
-    permission_classes = [IsAdminOrOwner]
+    
+    """
+        Allow only get for anyone
+    """
+    def get_permissions(self):
+        if self.request.method =='GET':
+            return [permissions.AllowAny()]
+        return [permissions.IsAdminUser()]
 
     # Cache list
     def list(self, request, *args, **kwargs):
