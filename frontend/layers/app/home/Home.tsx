@@ -12,7 +12,7 @@ import Link from 'next/link'
 // User info interface
 interface userProfile {
     id: number;
-    first_name: string[];
+    first_name: string;
     last_name: string;
     email: string;
     intro: string;
@@ -20,7 +20,7 @@ interface userProfile {
 }
 
 
-const HomePage = ({ first_name, last_name, email, intro, image }: userProfile) => {
+const HomePage = () => {
 
     // State management
     const [userData, setUserData] = useState<userProfile[] | null>(null);
@@ -53,8 +53,8 @@ const HomePage = ({ first_name, last_name, email, intro, image }: userProfile) =
     // Show loading if fetching
     if (loading) return <p className='flex justify-center items-center min-h-screen
             text-blue-600 font-extrabold text-6xl'>
-                Loading...
-            </p>;
+        Loading...
+    </p>;
 
     // Show error
     if (error) return <p className='flex justify-center items-center min-h-screen
@@ -158,4 +158,3 @@ const HomePage = ({ first_name, last_name, email, intro, image }: userProfile) =
 }
 
 export default HomePage
-
