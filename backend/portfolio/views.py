@@ -81,8 +81,15 @@ class ProjectsListCreate(generics.ListCreateAPIView):
 class ProjectsDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Projects.objects.all()
     serializer_class = ProjectsSerializer
-    permission_classes = [IsAdminOrOwner]
     lookup_field = 'pk'
+    
+    """
+        Allow only get for anyone
+    """
+    def get_permissions(self):
+        if self.request.method =='GET':
+            return [permissions.AllowAny()]
+        return [permissions.IsAdminUser()]
 
     # Cache retrieved objects
     def retrieve(self, request, *args, **kwargs):

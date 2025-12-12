@@ -55,11 +55,11 @@ function Badges() {
             bg: 'bg-gray-200',
             icon: (
                 <Image
-                src="/badges/drf.png"
-                alt="DRF logo"
-                width={29}
-                height={29}
-                className="mr-2 object-contain"
+                    src="/badges/drf.png"
+                    alt="DRF logo"
+                    width={29}
+                    height={29}
+                    className="mr-2 object-contain"
                 />
             ),
         },
@@ -89,7 +89,7 @@ function Badges() {
     ];
 
     return (
-        <div className="m-4 mt-auto pb-10">
+        <div className="m-4 mt-auto pb-20">
             <Marquee gradient>
                 {badges.map((badge, idx) => (
                     <div className='badges' key={idx}>
