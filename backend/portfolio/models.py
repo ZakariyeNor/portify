@@ -112,8 +112,8 @@ class Education(models.Model):
     def period(self):
         return f"{self.start_date} - {self.end_date}"
    
-    def __str__(self, obj):
-        return f"{obj.course} | {obj.school}"
+    def __str__(self):
+        return f"{self.course} | {self.school}"
     
 # Skill categories
 class SkillCategory(models.Model):
@@ -144,6 +144,7 @@ class Certificate(models.Model):
     name = models.CharField(max_length=255, blank=True)
     image = models.ImageField(upload_to="documents/certificates/")
     resume = models.FileField(upload_to="documents/resume/", blank=True, null=True)
+    about = models.TextField(blank=True, null=True)
     
     def __str__(self):
         return f"{self.name} | certificate"
