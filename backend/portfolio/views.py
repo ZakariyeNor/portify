@@ -7,13 +7,13 @@ from rest_framework.response import Response
 from .models import (
     Profile, Projects, Education,
     SkillCategory, Skill, Certificate,
-    Contact, Visons
+    Contact, Visions
 )
 from .serializers import (
     ProfileSerializer, ProjectsSerializer,
     EducationSerializer, SkillCategorySerializer,
     SkillSerializer, CertificateSerializer, ContactSerializer,
-    VisionsSerializer
+    VisionSerializer
 )
 
 from .permissions import IsAdminOrOwner
@@ -243,6 +243,13 @@ class ContactView(viewsets.ModelViewSet):
 
 # Visions model
 class VisionView(viewsets.ModelViewSet):
-    queryset = Visons.objects.all()
-    serializer_class = VisionsSerializer
-    permission_classes = [IsAdminOrOwner]
+    queryset = Visions.objects.all()
+    serializer_class = VisionSerializer
+    
+    """
+        Allow only get for anyone
+    """
+    def get_permissions(self):
+        if self.request.method =='GET':
+            return [permissions.AllowAny()]
+        return [permissions.IsAdminUser()]

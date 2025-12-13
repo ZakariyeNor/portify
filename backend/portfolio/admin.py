@@ -2,7 +2,8 @@ from django.contrib import admin
 from .models import (
     Profile, Projects, Tech,
     Education, SkillCategory, Skill,
-    Certificate, Contact, Visons
+    Certificate, Contact, Visions,
+    Principle, LongTerm
 )
 
 # --- Register Profile model in admin. ---
@@ -73,9 +74,36 @@ class ContactAdmin(admin.ModelAdmin):
     list_display = ('name', 'created_at')
     list_filter = ['created_at']
 
+# Principle inline
+class PrincipleInline(admin.TabularInline):
+    model = Principle
+    extra = 2
+    min_num = 1
+    ordering = ("title",)
+
+@admin.register(Principle)
+class PrincipleAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+    ordering = ('title',)
+
+
+# Long term inline
+class LongTermInline(admin.TabularInline):
+    model = LongTerm
+    extra = 2
+    min_num = 1
+    ordering = ("year", "plan")
+
+@admin.register(LongTerm)
+class LongTermAdmin(admin.ModelAdmin):
+    list_display = ('year', "plan")
+    ordering = ('year',)
+
+
 # --- Visions ---
-@admin.register(Visons)
+@admin.register(Visions)
 class VisionsAdmin(admin.ModelAdmin):
     list_display = ('title', 'created_at')
     list_filter = ('updated_at',)
     ordering = ("title",)
+    inlines = [PrincipleInline, LongTermInline]

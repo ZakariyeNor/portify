@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+
+
+
+
 # user info model
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -163,20 +167,50 @@ class Contact(models.Model):
         return f"Email from {self.name} | {self.created_at}"
 
 # Vision models
-class Visons(models.Model):
+class Visions(models.Model):
     title = models.CharField()
+    sub_title = models.CharField()
     vision_intro = models.TextField()
     principles_title = models.CharField()
-    principles_text = models.TextField()
-    long_term_date = models.DateField(default=timezone.now, blank=True)
-    long_term_title = models.CharField()
-    long_term_text = models.TextField()
+    longterm_title = models.CharField()
     created_at = models.DateTimeField(default=timezone.now, blank=True)
     updated_at = models.DateTimeField(default=timezone.now, blank=True)
     
     class Meta:
-        verbose_name_plural = 'Visons'
+        verbose_name_plural = 'Visions'
     
     def __str__(self):
-        return f"{self.title} | {self.created_at}"
+        return f"{self.title}"
+
+# Principles
+class Principle(models.Model):
+    vision = models.ForeignKey(
+        Visions, on_delete=models.CASCADE, related_name='principles_list', null=True, blank=True
+    )
+    title = models.CharField(max_length=200)
+    content = models.CharField()
+    
+
+    key = models.SlugField(
+        max_length=50,
+        unique=True,
+        default="temp",
+        help_text="Stable identifier (used in frontend logic, not shown to users)"
+    )
+
+# Long-term goals
+class LongTerm(models.Model):
+    vision = models.ForeignKey(
+        Visions, on_delete=models.CASCADE, related_name='long_term_list', null=True, blank=True
+    )
+
+    year = models.CharField(max_length=200)
+    plan = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField()
+
+    class Meta:
+        ordering = ["year"]
+
+    def __str__(self):
+        return f"{self.year} – {self.plan}"
     

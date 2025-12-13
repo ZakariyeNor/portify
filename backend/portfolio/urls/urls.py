@@ -7,8 +7,8 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 router.register(r'contact_us', views.ContactView, basename='contact')
 
-# Visons endpoint
-router.register(r'visons', views.VisionView, basename='visions')
+# Visions endpoint
+router.register(r'visions', views.VisionView, basename='visions')
 
 urlpatterns = [
     # Profile

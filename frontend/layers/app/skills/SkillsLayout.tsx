@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Button from '../components/ui/Button'
 import { FiDownload } from 'react-icons/fi'
 import { VscDebugBreakpointData } from 'react-icons/vsc'
-import { SkillsData, Education, Skills, SkillCategories, Certificates } from './Interface'
+import { SkillsData } from './Interface'
 import api from '@/lib/axios'
 import Link from 'next/link'
 import { Certificate } from 'crypto'
@@ -43,6 +43,16 @@ const SkillsPage = () => {
     }
     fetchSkills();
   }, [])
+
+  // Show loading if fetching
+    if (loading) return <p className='flex justify-center items-center min-h-screen
+            text-blue-600 font-extrabold text-6xl'>
+        Loading...
+    </p>;
+
+    // Show error
+    if (error) return <p className='flex justify-center items-center min-h-screen
+        text-red-500 font-extrabold text-3xl'>{error.join(", ")}</p>;
 
   return (
     <div className="flex flex-col p-15 lg:p-25 min-h-screen">
