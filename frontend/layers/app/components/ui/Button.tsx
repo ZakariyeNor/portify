@@ -7,10 +7,11 @@ interface ButtonProps {
     variant?: 'primary' | 'success' | 'info' | 'danger' | 'secondary'
     className?: string
     type?: 'submit' |'button' |'reset'
+    disabled?: boolean
 }
 
 const Button = ({
-    label, onClick, variant = 'primary', className, type = 'button'
+    label, onClick, variant = 'primary', className, type = 'button', disabled
 }: ButtonProps) => {
 
     const baseStyles = 
@@ -32,6 +33,7 @@ const Button = ({
         type={type}
         onClick={onClick}
         className={merged}
+        disabled={disabled}
     >
         {label}
     </button>
