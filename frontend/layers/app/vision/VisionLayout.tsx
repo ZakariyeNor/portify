@@ -31,11 +31,9 @@ const VisionLayout = () => {
           setVisions(responses.data)
           setError(null)
         }
-        console.log(responses.data)
       } catch (err: any) {
         setError([err.responses?.data.detail || "Something went wrong"])
         setVisions(null)
-        console.log(err)
       } finally {
         setLoading(false)
       }
