@@ -18,6 +18,7 @@ import {
 
 import { TbBrandDjango, TbBrandNextjs } from "react-icons/tb";
 import { MdAppSettingsAlt } from "react-icons/md";
+import { GrMultiple } from "react-icons/gr";
 
 
 
@@ -63,12 +64,27 @@ function Badges() {
                 />
             ),
         },
+        {
+            label: 'AWS S3',
+            color: 'text-red-800',
+            bg: 'bg-gray-200',
+            icon: (
+                <Image
+                    src="/badges/se.png"
+                    alt="S3 logo"
+                    width={30}
+                    height={30}
+                    className="mr-2 object-contain rounded-lg"
+                />
+            ),
+        },
 
         { label: 'Djoser', color: 'text-sky-600', bg: 'bg-gray-200', icon: <MdAppSettingsAlt /> },
 
         { label: 'Celery', color: 'text-green-600', bg: 'bg-gray-200', icon: <SiCelery /> },
         { label: 'Redis', color: 'text-red-600', bg: 'bg-gray-200', icon: <SiRedis /> },
 
+        { label: 'Tenants', color: 'text-green-600', bg: 'bg-gray-200', icon: <GrMultiple /> },
         { label: 'Wagtail', color: 'text-green-600', bg: 'bg-gray-200', icon: <SiWagtail /> },
         { label: 'Bootstrap', color: 'text-purple-700', bg: 'bg-gray-200', icon: <SiBootstrap /> },
 

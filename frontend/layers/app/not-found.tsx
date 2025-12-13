@@ -22,6 +22,7 @@ export const metadata = {
 }
 
 const NotFound = () => {
+
     return (
         <div className="flex flex-col justify-center items-center 
             min-h-screen px-4 text-center space-y-8">
@@ -44,12 +45,14 @@ const NotFound = () => {
             </p>
 
             {/* Return Button */}
-            <Button
-                type='button'
-                variant='primary'
-                label='Return to home'
-                className='px-6 py-3'
-            />
+            <Link href='/'>
+                <Button
+                    type='button'
+                    variant='primary'
+                    label='Return to home'
+                    className='px-6 py-3'
+                />
+            </Link>
 
             {/* Links */}
             <div className="flex flex-col sm:flex-row sm:space-x-6 space-y-2 sm:space-y-0 justify-center items-center text-gray-500 font-bold text-lg">
@@ -61,7 +64,7 @@ const NotFound = () => {
                 </div>
                 <GoDotFill />
                 <div>
-                    <Link href='/'>
+                    <Link href='/contact'>
                         Get In Touch
                     </Link>
                 </div>
