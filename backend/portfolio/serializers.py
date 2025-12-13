@@ -2,7 +2,8 @@ from rest_framework import serializers
 from .models import (
     Profile, Projects, Tech,
     Education, SkillCategory, Skill,
-    Certificate, Contact, Visons
+    Certificate, Contact, Visions,
+    Principle, LongTerm
 )
 from django.contrib.auth.models import User
 
@@ -126,13 +127,22 @@ class ContactSerializer(serializers.ModelSerializer):
             'id', 'name', 'subject', 'email', 'message'
         ]
 
+        
 """ Visions """
-class VisionsSerializer(serializers.ModelSerializer):
+class PrincipleSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Visons
-        fields = [
-            'id', 'title', 'vision_intro',
-            'principles_title', 'principles_text',
-            'long_term_date', 'long_term_title',
-            'long_term_text',
-        ]   
+        model = Principle
+        fields = ['id', 'key', 'title', 'content']
+
+class LongTermSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LongTerm
+        fields = ['id', 'year', 'plan', 'description']
+
+class VisionSerializer(serializers.ModelSerializer):
+    principles_list = PrincipleSerializer(many=True, read_only=True)
+    long_term_list = LongTermSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Visions
+        fields = ['id', 'title', 'sub_title', 'vision_intro', 'principles_title', 'longterm_title', 'principles_list', 'long_term_list']
