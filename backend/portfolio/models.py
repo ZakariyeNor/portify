@@ -17,7 +17,7 @@ class Profile(models.Model):
 # Tech used badges
 TECH_CHOICES = [
     ('nextjs', 'Next.js'),
-    ('designthinking', 'Design Thinking'),
+    ('design-thinking', 'Design Thinking'),
     ('react', 'React'),
     ('typescript', 'TypeScript'),
     ('tailwindcss', 'Tailwind CSS'),
@@ -38,7 +38,7 @@ TECH_CHOICES = [
     ('drf', 'DRF'),
     ('djoser', 'Djoser'),
     ('jwt', 'JWT'),
-    ('djangochannels', 'Django Channels'),
+    ('django-channels', 'Django Channels'),
     ('celery', 'Celery'),
     ('redis', 'Redis'),
     ('daphne', 'Daphne'),
@@ -55,6 +55,9 @@ TECH_CHOICES = [
     ('vercel', 'Vercel'),
     ('github', 'GitHub'),
     ('linux', 'Linux'),
+    ('tenants', 'Tenants'),
+    ('S3', 'S3'),
+    
 ]
 
 # Multiple choices

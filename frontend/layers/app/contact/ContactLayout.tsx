@@ -5,6 +5,7 @@ import { FaGithub } from 'react-icons/fa'
 import { RiTwitterFill } from 'react-icons/ri'
 import { MdEmail } from 'react-icons/md'
 import api from '@/lib/axios'
+import Link from 'next/link'
 
 // Form Control
 type ContactType = {
@@ -45,7 +46,7 @@ const ContactLayout = () => {
             if (errs.response?.data) {
                 setError(errs.response.data);
             } else {
-                setError({ non_field_errors: ["Something went wrong"]});
+                setError({ non_field_errors: ["Something went wrong"] });
             }
         } finally {
             setLoading(false);
@@ -75,12 +76,12 @@ const ContactLayout = () => {
                         <input
                             type="text"
                             value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name:e.target.value})}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                             className="bg-white border border-gray-300 rounded-lg p-2 placeholder-gray-400"
                             placeholder="Your Name"
                         />
                         {error?.name && (
-                        <p className="text-red-600 font-extrabold text-md border p-3 mt-3 rounded-xl opacity-90 bg-gray-100/50">{error.name.join(", ")}</p>
+                            <p className="text-red-600 font-extrabold text-md border p-3 mt-3 rounded-xl opacity-90 bg-gray-100/50">{error.name.join(", ")}</p>
                         )}
                     </div>
                     <div className="flex flex-col space-y-1 flex-1">
@@ -88,12 +89,12 @@ const ContactLayout = () => {
                         <input
                             type="email"
                             value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email:e.target.value })}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             className="bg-white border border-gray-300 rounded-lg p-2 placeholder-gray-400"
                             placeholder="your.email@example.com"
                         />
                         {error?.email && (
-                        <p className="text-red-600 font-extrabold text-md border p-3 mt-3 rounded-xl opacity-90 bg-gray-100/50">{error.email.join(", ")}</p>
+                            <p className="text-red-600 font-extrabold text-md border p-3 mt-3 rounded-xl opacity-90 bg-gray-100/50">{error.email.join(", ")}</p>
                         )}
                     </div>
                 </div>
@@ -104,13 +105,13 @@ const ContactLayout = () => {
                     <input
                         type="text"
                         value={formData.subject}
-                        onChange={(e) => setFormData({ ...formData, subject:e.target.value })}
+                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                         className="bg-white border border-gray-300 rounded-lg p-2 placeholder-gray-400"
                         placeholder="What is this about?"
                     />
                     {error?.subject && (
                         <p className="text-red-600 font-extrabold text-md border p-3 mt-3 rounded-xl opacity-90 bg-gray-100/50">{error.subject.join(", ")}</p>
-                        )}
+                    )}
                 </div>
 
                 {/* Message */}
@@ -118,13 +119,13 @@ const ContactLayout = () => {
                     <label className="text-sm font-medium">Message</label>
                     <textarea
                         value={formData.message}
-                        onChange={(e) => setFormData({ ...formData, message:e.target.value })}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         className="bg-white border border-gray-300 rounded-lg p-2 placeholder-gray-400 resize-none h-32 sm:h-40"
                         placeholder="Write your message here"
                     />
                     {error?.message && (
                         <p className="text-red-600 font-extrabold text-md border p-3 mt-3 rounded-xl opacity-90 bg-gray-100/50">{error.message.join(", ")}</p>
-                        )}
+                    )}
                 </div>
 
                 {/* Submit Button */}
@@ -148,13 +149,19 @@ const ContactLayout = () => {
                 {/* Icons */}
                 <div className="flex flex-row items-center justify-center space-x-4 pt-5">
                     <div className="flex items-center justify-center h-12 w-12 rounded-full icons">
-                        <FaGithub className="h-6 w-6" />
+                        <Link href='https://github.com/ZakariyeNor' target='_blank' rel="noopener noreferrer">
+                            <FaGithub className="h-6 w-6" />
+                        </Link>
                     </div>
                     <div className="flex items-center justify-center h-12 w-12 rounded-full icons">
-                        <RiTwitterFill className="h-6 w-6" />
+                        <Link href='https://x.com/zakariye_nor23' target='_blank' rel="noopener noreferrer">
+                            <RiTwitterFill className="h-6 w-6" />
+                        </Link>
                     </div>
                     <div className="flex items-center justify-center h-12 w-12 rounded-full icons">
-                        <MdEmail className="h-6 w-6" />
+                        <Link href='mailto:zakigeorgia1@gmail.com' target='_blank' rel="noopener noreferrer">
+                            <MdEmail className="h-6 w-6" />
+                        </Link>
                     </div>
                 </div>
             </div>

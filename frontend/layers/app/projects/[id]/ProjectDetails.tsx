@@ -39,16 +39,18 @@ const ProjectDetails = () => {
         if (!id) return;
         const fetchOnePRoject = async () => {
             try {
-                const res = await api.get(`/api/projects/${id}`);
+                const res = await api.get(`/api/projects/${id}/`);
                 if (res.data.length === 0) {
                     setError(["There is no project with that id"]);
                     setindividualProject(null);
+                    console.log(res.data)
                 } else {
                     setindividualProject(res.data);
                     setError(null);
                 }
             } catch (err: any) {
                 setError([err.res?.data?.detail || "Something went wrong"]);
+                console.log(err)
             } finally {
                 setLoading(false);
             }
@@ -149,7 +151,7 @@ const ProjectDetails = () => {
                                 <h3 className="font-semibold text-base sm:text-lg">Project Links</h3>
 
                                 {/* Live Project */}
-                                <Link href='/'>
+                                <Link  href='https://github.com/ZakariyeNor/portify' target='_blank' rel="noopener noreferrer">
                                     <div className="relative w-full">
                                         {/* Icon first */}
                                         <RxExternalLink className='absolute top-1/2 left-4 -translate-y-1/2 text-lg text-white' />

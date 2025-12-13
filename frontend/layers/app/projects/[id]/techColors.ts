@@ -9,6 +9,7 @@ export const techColors: Record<string, { bg: string; text: string }> = {
   Tenants: { bg: "bg-orange-400/30", text: "text-orange-700" },
   Wagtail: { bg: "bg-emerald-400/30", text: "text-emerald-700" },
   HTML: { bg: "bg-red-400/30", text: "text-red-700" },
+  S3: { bg: "bg-red-400/30", text: "text-red-700" },
   CSS: { bg: "bg-blue-300/30", text: "text-blue-800" },
   JavaScript: { bg: "bg-yellow-300/30", text: "text-yellow-800" },
   Python: { bg: "bg-sky-400/30", text: "text-sky-700" },

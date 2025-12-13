@@ -87,7 +87,7 @@ class ProjectsDetail(generics.RetrieveUpdateDestroyAPIView):
         Allow only get for anyone
     """
     def get_permissions(self):
-        if self.request.method =='GET':
+        if self.request.method == 'GET':
             return [permissions.AllowAny()]
         return [permissions.IsAdminUser()]
 
