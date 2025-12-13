@@ -1,10 +1,58 @@
-import React from 'react'
+'use client'
+import React, { useState } from 'react'
 import Button from '../components/ui/Button'
 import { FaGithub } from 'react-icons/fa'
 import { RiTwitterFill } from 'react-icons/ri'
 import { MdEmail } from 'react-icons/md'
+import api from '@/lib/axios'
+
+// Form Control
+type ContactType = {
+    name: string;
+    subject: string;
+    email: string;
+    message: string;
+}
+
 
 const ContactLayout = () => {
+
+    // Sate management
+    const [formData, setFormData] = useState<ContactType>({
+        name: '', email: '', subject: '', message: '',
+    });
+
+    // Control form submission data
+    const [error, setError] = useState<{ [key: string]: string[] } | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
+
+    // On Form submission
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        // prevent page reload
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+
+
+        try {
+            const sendForm = await api.post('/api/contact_us/', formData);
+            setError(null);
+
+            // reset
+            setFormData({ name: '', email: '', subject: '', message: '' });
+
+        } catch (errs: any) {
+            if (errs.response?.data) {
+                setError(errs.response.data);
+            } else {
+                setError({ non_field_errors: ["Something went wrong"]});
+            }
+        } finally {
+            setLoading(false);
+        }
+    }
+
+
     return (
         <div className="flex flex-col justify-center items-center px-4 py-10 sm:py-16 lg:py-25 min-h-screen">
             {/* Intro */}
@@ -19,24 +67,34 @@ const ContactLayout = () => {
             </div>
 
             {/* Contact Form */}
-            <form className="flex flex-col space-y-4 mt-8 sm:mt-12 w-full max-w-3xl">
+            <form onSubmit={handleSubmit} className="flex flex-col space-y-4 mt-8 sm:mt-12 w-full max-w-3xl">
                 {/* Name & Email */}
                 <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
                     <div className="flex flex-col space-y-1 flex-1">
                         <label className="text-sm font-medium">Name</label>
                         <input
                             type="text"
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name:e.target.value})}
                             className="bg-white border border-gray-300 rounded-lg p-2 placeholder-gray-400"
                             placeholder="Your Name"
                         />
+                        {error?.name && (
+                        <p className="text-red-600 font-extrabold text-md border p-3 mt-3 rounded-xl opacity-90 bg-gray-100/50">{error.name.join(", ")}</p>
+                        )}
                     </div>
                     <div className="flex flex-col space-y-1 flex-1">
                         <label className="text-sm font-medium">Email</label>
                         <input
                             type="email"
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email:e.target.value })}
                             className="bg-white border border-gray-300 rounded-lg p-2 placeholder-gray-400"
                             placeholder="your.email@example.com"
                         />
+                        {error?.email && (
+                        <p className="text-red-600 font-extrabold text-md border p-3 mt-3 rounded-xl opacity-90 bg-gray-100/50">{error.email.join(", ")}</p>
+                        )}
                     </div>
                 </div>
 
@@ -45,27 +103,38 @@ const ContactLayout = () => {
                     <label className="text-sm font-medium">Subject</label>
                     <input
                         type="text"
+                        value={formData.subject}
+                        onChange={(e) => setFormData({ ...formData, subject:e.target.value })}
                         className="bg-white border border-gray-300 rounded-lg p-2 placeholder-gray-400"
                         placeholder="What is this about?"
                     />
+                    {error?.subject && (
+                        <p className="text-red-600 font-extrabold text-md border p-3 mt-3 rounded-xl opacity-90 bg-gray-100/50">{error.subject.join(", ")}</p>
+                        )}
                 </div>
 
                 {/* Message */}
                 <div className="flex flex-col space-y-1">
                     <label className="text-sm font-medium">Message</label>
                     <textarea
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message:e.target.value })}
                         className="bg-white border border-gray-300 rounded-lg p-2 placeholder-gray-400 resize-none h-32 sm:h-40"
                         placeholder="Write your message here"
                     />
+                    {error?.message && (
+                        <p className="text-red-600 font-extrabold text-md border p-3 mt-3 rounded-xl opacity-90 bg-gray-100/50">{error.message.join(", ")}</p>
+                        )}
                 </div>
 
                 {/* Submit Button */}
                 <div className="flex justify-end">
                     <Button
-                        type="button"
+                        type="submit"
                         variant="primary"
                         className="w-40"
-                        label="Send Message"
+                        label={loading ? "Sending..." : "Send Message"}
+                        disabled={loading}
                     />
                 </div>
             </form>

@@ -214,15 +214,15 @@ class CertificateDetails(generics.RetrieveUpdateDestroyAPIView):
 class ContactView(viewsets.ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
-    permission_classes = [permissions.IsAuthenticated, IsAdminOrOwner]
     
     def get_permissions(self):
         """
             Allow unauthenticated users to send contacts form
+            And allow frontend to retrieve data
         """
-        if self.action == "create":
+        if self.action in ["create", "list"]:
             return [permissions.AllowAny()]
-        return super().get_permissions()
+        return [permissions.IsAuthenticated()]
     
     # serialize contatct data
     def create(self, request, *args, **kwargs):
