@@ -5,6 +5,9 @@ import { BsBarChartSteps } from 'react-icons/bs'
 import { RiMenu2Line } from 'react-icons/ri'
 import Button from './Button'
 import { usePathname } from 'next/navigation'
+import Image from 'next/image'
+
+
 
 const Navigation = () => {
     const pathName = usePathname()
@@ -61,7 +64,13 @@ const Navigation = () => {
 
         {/* Logo */}
         <Link href="/" className="btn btn-ghost text-xl">
-          <BsBarChartSteps className="text-blue-600 text-2xl font-extrabold" />
+          <Image
+            src='/logo.png'
+            alt='Logo Image'
+            className='rounded-lg p-1'
+            width={40}
+            height={10}
+          />
           <h1 className="pl-1 font-semibold">Portify</h1>
         </Link>
       </div>
