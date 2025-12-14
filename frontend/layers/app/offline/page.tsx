@@ -1,12 +1,17 @@
 import React from 'react'
+import Badges from '../home/Badges';
 
 export default function Offline() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">You're Offline</h1>
-        <p>Please check your internet connection</p>
+    <div className="flex flex-col min-h-screen">
+      <div className="flex-1 flex items-center justify-center">
+        <div className="text-center">
+          <h1>You're Offline</h1>
+          <p>Please check your internet connection</p>
+        </div>
       </div>
+      <Badges />
     </div>
+
   );
 }

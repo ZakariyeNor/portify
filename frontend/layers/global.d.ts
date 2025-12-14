@@ -1,6 +1,6 @@
 declare module '*.css';
 
-declare module 'next-pwa' {
+declare module '@ducanh2912/next-pwa' {
   import { NextConfig } from 'next';
  
   interface PWAConfig {
@@ -24,6 +24,8 @@ declare module 'next-pwa' {
       video?: string;
       font?: string;
     };
+
+  aggressiveFrontEndNavCaching: boolean;
   }
  
   function withPWA(config: PWAConfig): (nextConfig: NextConfig) => NextConfig;
