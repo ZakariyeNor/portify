@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Montserrat, Open_Sans, Lato } from "next/font/google";
 import "./globals.css";
 import Navigation from "./components/ui/Navbar";
 import ToastProvider from "./providers/ToastProvider";
 import PWAHead from "./components/icons/PWAHead";
+import ServiceWorkerRegistration from "./components/ServiceWorkerRegistration";
 
 
 
@@ -28,17 +29,18 @@ const Action = Lato({
   variable: '--font-action',
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#000000",
+};
+
 export const metadata: Metadata = {
   title: "Portify",
   description: "Personal portfolio showcasing projects and skills",
   keywords: ["portfolio", "Next.js", "Tailwind", "DaisyUI", "shadcn/ui"],
   manifest: "/manifest.json",
-  themeColor: "#000000",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -69,6 +71,7 @@ export default function RootLayout({
       <body
         className={`${Headers.variable} ${Body.variable} ${Action.variable} antialiased`}
       >
+        <ServiceWorkerRegistration />
         <ToastProvider />
         <Navigation />
         {children}
