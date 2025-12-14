@@ -3,6 +3,7 @@ import { Montserrat, Open_Sans, Lato } from "next/font/google";
 import "./globals.css";
 import Navigation from "./components/ui/Navbar";
 import ToastProvider from "./providers/ToastProvider";
+import PWAHead from "./components/icons/PWAHead";
 
 
 
@@ -40,6 +41,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <PWAHead />
+      </head>
       <body
         className={`${Headers.variable} ${Body.variable} ${Action.variable} antialiased`}
       >
