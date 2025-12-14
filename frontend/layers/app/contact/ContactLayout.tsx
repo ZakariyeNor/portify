@@ -6,6 +6,9 @@ import { RiTwitterFill } from 'react-icons/ri'
 import { MdEmail } from 'react-icons/md'
 import api from '@/lib/axios'
 import Link from 'next/link'
+import toast from 'react-hot-toast'
+
+
 
 // Form Control
 type ContactType = {
@@ -31,18 +34,22 @@ const ContactLayout = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         // prevent page reload
         e.preventDefault();
+        if (loading) return;
         setLoading(true);
         setError(null);
 
 
         try {
             const sendForm = await api.post('/api/contact_us/', formData);
-            setError(null);
 
+            toast.success("Message sent successfully!, we'll answer you in 24 hours.");
+            
             // reset
             setFormData({ name: '', email: '', subject: '', message: '' });
+            setError(null);
 
         } catch (errs: any) {
+            toast.error("Failed to send message. Please try again.")
             if (errs.response?.data) {
                 setError(errs.response.data);
             } else {

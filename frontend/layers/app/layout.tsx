@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Montserrat, Open_Sans, Lato } from "next/font/google";
 import "./globals.css";
 import Navigation from "./components/ui/Navbar";
+import ToastProvider from "./providers/ToastProvider";
+
 
 
 // Headers fonts
@@ -41,6 +43,7 @@ export default function RootLayout({
       <body
         className={`${Headers.variable} ${Body.variable} ${Action.variable} antialiased`}
       >
+        <ToastProvider />
         <Navigation />
         {children}
       </body>
