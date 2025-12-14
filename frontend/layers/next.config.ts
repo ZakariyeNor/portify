@@ -1,4 +1,7 @@
+import { register } from "module";
 import type { NextConfig } from "next";
+import withPWA from "next-pwa";
+
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -13,6 +16,12 @@ const nextConfig: NextConfig = {
     ],
     unoptimized: true,
   },
+  turbopack: {},
 };
 
-export default nextConfig;
+export default withPWA({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development',
+})(nextConfig);

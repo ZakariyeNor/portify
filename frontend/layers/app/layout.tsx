@@ -30,9 +30,31 @@ const Action = Lato({
 
 export const metadata: Metadata = {
   title: "Portify",
-  description: "Personal portfolio",
-  keywords: ["portfolio", "Next.js", "Tailwind", "DaisyUI", "shadcn/ui"]
+  description: "Personal portfolio showcasing projects and skills",
+  keywords: ["portfolio", "Next.js", "Tailwind", "DaisyUI", "shadcn/ui"],
+  manifest: "/manifest.json",
+  themeColor: "#000000",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Portify",
+  },
+  icons: {
+    icon: [
+      { url: "/icons/manifest-icon-192.maskable.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/manifest-icon-512.maskable.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icons/apple-icon-180.png", sizes: "152x152", type: "image/png" },
+    ],
+  },
 };
+
 
 export default function RootLayout({
   children,
