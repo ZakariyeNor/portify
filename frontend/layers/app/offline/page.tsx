@@ -1,3 +1,6 @@
+
+export const dynamic = 'force-static';
+
 import React from 'react'
 import Badges from '../home/Badges';
 
