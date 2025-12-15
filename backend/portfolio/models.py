@@ -70,7 +70,7 @@ class Tech(models.Model):
     def __str__(self):
         return self.name
 
-# Categories
+# Category choices
 CATEGORY_CHOICES = [
     ('static', 'Static Websites'),
     ('interactive', 'Interactive Frontend'),
@@ -96,6 +96,8 @@ class Projects(models.Model):
         choices=CATEGORY_CHOICES, 
         default='static'
     )
+    live_url = models.URLField(blank=True, null=True)
+    source_code = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now, blank=True)
     
     class Meta:

@@ -20,6 +20,8 @@ interface individualProject {
     image: string;
     category: string;
     tech: string[];
+    live_url: string;
+    source_code: string;
 }
 
 
@@ -151,7 +153,7 @@ const ProjectDetails = () => {
                                 <h3 className="font-semibold text-base sm:text-lg">Project Links</h3>
 
                                 {/* Live Project */}
-                                <Link  href='https://github.com/ZakariyeNor/portify' target='_blank' rel="noopener noreferrer">
+                                <Link  href={individualProject.live_url} target='_blank' rel="noopener noreferrer">
                                     <div className="relative w-full">
                                         {/* Icon first */}
                                         <RxExternalLink className='absolute top-1/2 left-4 -translate-y-1/2 text-lg text-white' />
@@ -165,7 +167,7 @@ const ProjectDetails = () => {
                                 </Link>
 
                                 {/* Github Docs */}
-                                <Link href='/'>
+                                <Link href={individualProject.source_code} target='_blank' rel="noopener noreferrer">
                                     <div className="relative w-full">
                                         {/* Icon first */}
                                         <IoIosCode className='absolute top-1/2 left-4 -translate-y-1/2 text-lg text-white' />
