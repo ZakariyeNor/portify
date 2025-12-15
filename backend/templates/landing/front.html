@@ -1,28 +1,36 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Portify API Landing</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        h1 { color: #2c3e50; }
-        code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
-        pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
-    </style>
+  <meta charset="UTF-8">
+  <title>Landing - API | Portfolio</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Personal Portfolio API providing projects, user profiles, and resources for integration and internal use.">
+  <meta name="keywords" content="portfolio, API, projects, user profiles, backend, integration">
+  <meta name="author" content="Your Name">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Optional: Social Media / Open Graph -->
+  <meta property="og:title" content="Personal Portfolio API">
+  <meta property="og:description" content="API for project data, user profiles, and resources for my personal portfolio.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/social-preview.png">
+  <meta property="og:url" content="https://yourdomain.com/">
+
+  <!-- External css -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <h1>Welcome to Portify API</h1>
-    <p>This is a backend-only landing page for developers and internal use.</p>
-
-    <h2>Endpoints</h2>
-    <ul>
-        <li><code>GET /api/users/</code> - List all users</li>
-        <li><code>POST /api/login/</code> - Authenticate user</li>
-        <li><code>GET /api/projects/</code> - List all projects</li>
-        <!-- Add your API endpoints here -->
-    </ul>
-
-    <h2>Authentication</h2>
-    <p>All endpoints require JWT token authentication.</p>
+    <div class="container">
+      <img src="{% static 'images/logos.png' %}" alt="Main Logo" class="logo-img">
+    <h1>Personal Portfolio API</h1>
+    <p>This is a backend endpoint for my portfolio application.  
+    It provides project data, user profiles, and other resources for integration and internal use.</p>
+  </div>
 </body>
 </html>
