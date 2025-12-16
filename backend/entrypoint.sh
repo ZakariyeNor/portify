@@ -29,6 +29,19 @@ except psycopg2.OperationalError:
   sleep 1
 done
 
+# Collect static files
+echo "Collect static files..."
+python3 manage.py collectstatic --noinput
+
+# Display if collected static files exist
+if [ -d "staticfiles" ]; then
+    echo "Collected static files:"
+    ls -l staticfiles
+else
+    echo "No static files collected."
+fi
+
+# Continue with migrations
 echo "Postgres is up and database is accessible - continuing..."
 
 # Show migration plan

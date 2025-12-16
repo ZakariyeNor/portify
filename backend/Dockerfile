@@ -1,5 +1,5 @@
 # Base Image
-FROM python:3.12-slim
+FROM python:3.13.7-slim
 
 # Disable .pyc files and enable unbuffered logs
 ENV PYTHONDONTWRITEBYTECODE=1
