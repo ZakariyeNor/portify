@@ -29,6 +29,10 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['portify-production-center.up.railway.app', '0.0.0.0', '127.0.0.1', 'localhost']
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://portify-production-center.up.railway.app",
+]
+
 
 # Application definition
 
