@@ -58,12 +58,15 @@ python3 manage.py migrate
 
 echo "Migrations completed successfully."
 
-
-# Run the container command
-# If no command is provided, run the default CMD from Dockerfile
+# For development or production based on LEVEL environment variable
 if [ $# -eq 0 ]; then
-    echo "Starting Django development server..."
-    exec python3 manage.py runserver 0.0.0.0:8000
+    if [ "$LEVEL" = "development" ]; then
+        echo "Starting Django development server..."
+        exec python3 manage.py runserver 0.0.0.0:8000
+    else
+        echo "Starting Django production server..."
+        exec gunicorn portify.wsgi:application --bind 0.0.0.0:8000 --workers 3
+    fi
 else
     exec "$@"
 fi

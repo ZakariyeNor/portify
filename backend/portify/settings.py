@@ -5,6 +5,9 @@ import sys
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import dj_database_url
+
+
 
 # Initialize environ
 env = environ.Env()
@@ -20,12 +23,11 @@ else:
     print("WARNING: No .env file found, using environment variables")
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-h$uss@2$lyux&yhu+ma_yf)-fqt$sh-hr)qr0j6e-o7e7l=11i'
-
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -87,17 +89,41 @@ WSGI_APPLICATION = 'portify.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# Default: Postgres from env
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('POSTGRES_DB', default='postgres'),
-        'USER': env('POSTGRES_USER', default='postgres'),
-        'PASSWORD': env('POSTGRES_PASSWORD', default=''),
-        'HOST': env('POSTGRES_HOST', default='localhost'),
-        'PORT': env('POSTGRES_PORT', cast=int, default=5432),
+# DB configuration logic (Docker on development and railway on production)
+if env('LEVEL') == 'development':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env('POSTGRES_DB', default='postgres'),
+            'USER': env('POSTGRES_USER', default='postgres'),
+            'PASSWORD': env('POSTGRES_PASSWORD', default=''),
+            'HOST': env('POSTGRES_HOST', default='localhost'),
+            'PORT': env('POSTGRES_PORT', cast=int, default=5432),
+        }
     }
-}
+    
+    # CELERY conf
+    CELERY_BROKER_URL = env("CELERY_BROKER_URL", default="redis://redis:6379/0")
+    CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND", default="redis://redis:6379/0")
+    CELERY_ACCEPT_CONTENT = ["json"]
+    CELERY_TASK_SERIALIZER = "json"
+    CELERY_RESULT_SERIALIZER = "json"
+    print("CELERY_BROKER_URL =", CELERY_BROKER_URL)
+    print("CELERY_RESULT_BACKEND =", CELERY_RESULT_BACKEND)
+else:
+    # Production DB on Railway
+    DATABASES = {
+    'default': dj_database_url.parse(env('DATABASE_URL'))
+    }
+    
+    # Production Redis on Railway
+    REDIS_URL = env("REDIS_URL")
+    CELERY_BROKER_URL = env("REDIS_URL")
+    CELERY_RESULT_BACKEND = env("REDIS_URL")
+    CELERY_ACCEPT_CONTENT = ["json"]
+    CELERY_TASK_SERIALIZER = "json"
+    CELERY_RESULT_SERIALIZER = "json"
+
 
 # Use SQLite for tests to avoid external dependencies
 if 'test' in sys.argv or 'pytest' in sys.argv:
@@ -115,6 +141,7 @@ if DATABASES['default']['ENGINE'] != 'django.db.backends.sqlite3':
     print(f"Database Name: {DATABASES['default']['NAME']}")
     print(f"Database Host: {DATABASES['default']['HOST']}")
     print(f"Database Port: {DATABASES['default']['PORT']}")
+    print(f"Project Secret-key: (SECRET_KEY)")
     print("-----------------------------------\n")
 
 
@@ -160,15 +187,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # DEFAULT
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CELERY conf
-CELERY_BROKER_URL = env("CELERY_BROKER_URL", default="redis://redis:6379/0")
-CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND", default="redis://redis:6379/0")
-CELERY_ACCEPT_CONTENT = ["json"]
-CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_SERIALIZER = "json"
-
-print("CELERY_BROKER_URL =", CELERY_BROKER_URL)
-print("CELERY_RESULT_BACKEND =", CELERY_RESULT_BACKEND)
 
 # Email
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -194,7 +212,7 @@ print("CONTACT_RECIPIENT_EMAIL =", CONTACT_RECIPIENT_EMAIL)
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": env("REDIS_URL", default="redis://redis:6379/1"),
+        "LOCATION": env("REDIS_CACHE_URL", default="redis://redis:6379/1"),
         "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
     }
 }
