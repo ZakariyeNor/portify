@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'cloudinary',
     'cloudinary_storage',
+    'drf_yasg',
     
     # Local
     "portfolio",
@@ -70,6 +71,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -152,6 +154,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# DEFAULT
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CELERY conf
 CELERY_BROKER_URL = env("CELERY_BROKER_URL", default="redis://redis:6379/0")

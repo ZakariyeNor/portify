@@ -23,6 +23,14 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 # Copy project files
 COPY . .
 
+# Create non-root user and switch to it
+RUN addgroup --system appgroup \
+    && adduser --system --ingroup appgroup appuser \
+    && chown -R appuser:appgroup /app
+
+USER appuser
+
+
 # Make entrypoint executable
 RUN chmod +x ./entrypoint.sh
 
