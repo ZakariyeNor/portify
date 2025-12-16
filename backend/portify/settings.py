@@ -2,6 +2,9 @@ import os
 from pathlib import Path
 import environ
 import sys
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Initialize environ
 env = environ.Env()
@@ -39,6 +42,8 @@ INSTALLED_APPS = [
     # Third-party
     'rest_framework',
     'corsheaders',
+    'cloudinary',
+    'cloudinary_storage',
     
     # Local
     "portfolio",
@@ -200,3 +205,15 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
 ]
 CORS_ALLOW_ALL_ORIGINS = True
+
+
+# Cloudinary configuration
+cloudinary.config(
+    cloud_name = env('CLOUDINARY_CLOUD_NAME'),
+    api_key = env('CLOUDINARY_API_KEY'),
+    api_secret = env('CLOUDINARY_API_SECRET'),
+    secure=True,
+)
+
+# Use Cloudinary storage for media files
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
