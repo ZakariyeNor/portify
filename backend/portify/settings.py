@@ -153,10 +153,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Images and documents for local dev
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
-
 # CELERY conf
 CELERY_BROKER_URL = env("CELERY_BROKER_URL", default="redis://redis:6379/0")
 CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND", default="redis://redis:6379/0")
@@ -208,12 +204,10 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Cloudinary configuration
-cloudinary.config(
-    cloud_name = env('CLOUDINARY_CLOUD_NAME'),
-    api_key = env('CLOUDINARY_API_KEY'),
-    api_secret = env('CLOUDINARY_API_SECRET'),
-    secure=True,
-)
+CLOUDINARY_URL = env("CLOUDINARY_URL", default="")
+
+# Cloudinary SDK will automatically parse CLOUDINARY_URL
+cloudinary.config(secure=True)
 
 # Use Cloudinary storage for media files
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"

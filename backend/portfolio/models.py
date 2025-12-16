@@ -2,13 +2,17 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+from cloudinary.models import CloudinaryField
+
 
 
 
 # user info model
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to="business_photo/", blank=True)
+    image = CloudinaryField(
+        'image', folder='portify/profile/', blank=True, null=True
+    )
     intro = models.TextField(blank=True)
     
     def __str__(self):
@@ -84,7 +88,9 @@ class Projects(models.Model):
     name = models.CharField(unique=True, blank=False, null=False, max_length=50)
     intro = models.CharField(max_length=150, unique=True, blank=False, null=False)
     docs = models.TextField()
-    image = models.ImageField(upload_to="project_image/")
+    image = CloudinaryField(
+        'image', folder='portify/projects/', blank=True, null=True
+    )
     tech = models.ManyToManyField(Tech, related_name="projects_all_tech")
     main_tech = models.ManyToManyField(
         Tech,
@@ -151,8 +157,12 @@ class Skill(models.Model):
 # Certivicates
 class Certificate(models.Model):
     name = models.CharField(max_length=255, blank=True)
-    image = models.ImageField(upload_to="documents/certificates/")
-    resume = models.FileField(upload_to="documents/resume/", blank=True, null=True)
+    image = CloudinaryField(
+        'file', folder='portify/documents/certificates/', blank=True, null=True
+    )
+    resume = CloudinaryField(
+        'file', folder='portify/documents/resumes/', blank=True, null=True
+    )
     about = models.TextField(blank=True, null=True)
     
     def __str__(self):
