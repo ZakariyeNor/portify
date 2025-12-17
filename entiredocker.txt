@@ -111,3 +111,25 @@ services:
 volumes:
   postgres_data:
   redis_data:
+
+
+else:
+    # Production DB on Railway
+    DATABASES = {
+    'default': dj_database_url.parse(env('DATABASE_URL'))
+    }
+    
+    # Production Redis on Railway (optional - disable Celery if not available)
+    REDIS_URL = env("REDIS_URL", default="")
+    if REDIS_URL:
+        CELERY_BROKER_URL = REDIS_URL
+        CELERY_RESULT_BACKEND = REDIS_URL
+        CELERY_ACCEPT_CONTENT = ["json"]
+        CELERY_TASK_SERIALIZER = "json"
+        CELERY_RESULT_SERIALIZER = "json"
+        print(f"Production mode - Using Railway DATABASE_URL and REDIS_URL")
+    else:
+        # No Redis available - Celery tasks will fail gracefully
+        CELERY_TASK_ALWAYS_EAGER = True
+        CELERY_TASK_EAGER_PROPAGATES = True
+        print(f"Production mode - No Redis, Celery tasks run synchronously")
