@@ -113,13 +113,9 @@ WSGI_APPLICATION = 'portify.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+LEVEL = os.environ.get("LEVEL", "development")
 
-# DB configuration logic (Docker on development and railway on production)
-# Railway will have DATABASE_URL set, dev won't
-is_railway = bool(os.environ.get('DATABASE_URL'))
-is_development = os.environ.get('LEVEL') == 'development' or not is_railway
-
-if is_development:
+if LEVEL == "development":
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -139,27 +135,6 @@ if is_development:
     CELERY_RESULT_SERIALIZER = "json"
     print("CELERY_BROKER_URL =", CELERY_BROKER_URL)
     print("CELERY_RESULT_BACKEND =", CELERY_RESULT_BACKEND)
-else:
-    # Production DB on Railway
-    DATABASES = {
-    'default': dj_database_url.parse(env('DATABASE_URL'))
-    }
-    
-    # Production Redis on Railway (optional - disable Celery if not available)
-    REDIS_URL = env("REDIS_URL", default="")
-    if REDIS_URL:
-        CELERY_BROKER_URL = REDIS_URL
-        CELERY_RESULT_BACKEND = REDIS_URL
-        CELERY_ACCEPT_CONTENT = ["json"]
-        CELERY_TASK_SERIALIZER = "json"
-        CELERY_RESULT_SERIALIZER = "json"
-        print(f"Production mode - Using Railway DATABASE_URL and REDIS_URL")
-    else:
-        # No Redis available - Celery tasks will fail gracefully
-        CELERY_TASK_ALWAYS_EAGER = True
-        CELERY_TASK_EAGER_PROPAGATES = True
-        print(f"Production mode - No Redis, Celery tasks run synchronously")
-
 
 # Use SQLite for tests to avoid external dependencies
 if 'test' in sys.argv or 'pytest' in sys.argv:
