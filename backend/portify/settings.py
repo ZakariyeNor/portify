@@ -35,7 +35,12 @@ DEBUG = env.bool('DEBUG', default=False)
 
 # Railway provides RAILWAY_PUBLIC_DOMAIN
 RAILWAY_PUBLIC_DOMAIN = env('RAILWAY_PUBLIC_DOMAIN', default='')
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'portify-production.up.railway.app',
+]
+
 
 
 if RAILWAY_PUBLIC_DOMAIN:
