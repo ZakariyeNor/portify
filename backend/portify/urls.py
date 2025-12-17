@@ -1,11 +1,26 @@
 from django.contrib import admin
 from django.urls import path, include, re_path
 from django.http import JsonResponse
+from django.db import connection
 
 
 # Health check endpoint for Railway
 def health_check(request):
-    return JsonResponse({"status": "healthy", "service": "portify-backend"})
+    try:
+        # Check database connectivity
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+        return JsonResponse({
+            "status": "healthy",
+            "service": "portify-backend",
+            "database": "connected"
+        })
+    except Exception as e:
+        return JsonResponse({
+            "status": "unhealthy",
+            "service": "portify-backend",
+            "error": str(e)
+        }, status=503)
 
 
 # Swagger
