@@ -64,8 +64,10 @@ if [ "$LEVEL" = "development" ]; then
     echo "Starting Django development server..."
     exec python3 manage.py runserver 0.0.0.0:8000
 else
-    # Use PORT from environment, default to 8000 if not set
-    PORT=${PORT:-8000}
+    if [ -z "$PORT" ]; then
+        echo "ERROR: PORT environment variable is not set!"
+        exit 1
+    fi
     echo "Starting Django production server on port $PORT..."
-    exec gunicorn portify.wsgi:application --bind "0.0.0.0:${PORT}" --workers 3
+    exec sh -c "gunicorn portify.wsgi:application --bind 0.0.0.0:$PORT --workers 3"
 fi
