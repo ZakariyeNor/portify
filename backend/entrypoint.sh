@@ -59,14 +59,15 @@ python3 manage.py migrate
 echo "Migrations completed successfully."
 
 # For development or production based on LEVEL environment variable
-if [ $# -eq 0 ]; then
-    if [ "$LEVEL" = "development" ]; then
-        echo "Starting Django development server..."
-        exec python3 manage.py runserver 0.0.0.0:8000
-    else
-        echo "Starting Django production server..."
-        exec gunicorn portify.wsgi:application --bind 0.0.0.0:8000 --workers 3
-    fi
+# Run server based on LEVEL
+if [ "$LEVEL" = "development" ]; then
+    echo "Starting Django development server..."
+    exec python3 manage.py runserver 0.0.0.0:8000
 else
-    exec "$@"
+    if [ -z "$PORT" ]; then
+        echo "ERROR: PORT environment variable is not set!"
+        exit 1
+    fi
+    echo "Starting Django production server on port $PORT..."
+    exec gunicorn portify.wsgi:application --bind 0.0.0.0:$PORT --workers 3
 fi
