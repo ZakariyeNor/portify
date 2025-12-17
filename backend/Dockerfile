@@ -34,6 +34,10 @@ USER appuser
 # Make entrypoint executable
 RUN chmod +x ./entrypoint.sh
 
+# Expose port
+EXPOSE $PORT
+
+
 # For development
 # (Default command (overwritten by docker-compose)
 CMD ["./entrypoint.sh"]
