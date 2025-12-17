@@ -31,13 +31,28 @@ else:
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['portify-production-center.up.railway.app', '0.0.0.0', '127.0.0.1', 'localhost']
+# Railway provides RAILWAY_PUBLIC_DOMAIN
+RAILWAY_PUBLIC_DOMAIN = env('RAILWAY_PUBLIC_DOMAIN', default='')
+ALLOWED_HOSTS = [
+    'portify-production-center.up.railway.app',
+    '0.0.0.0',
+    '127.0.0.1',
+    'localhost',
+]
+
+
+if RAILWAY_PUBLIC_DOMAIN:
+    ALLOWED_HOSTS.append(RAILWAY_PUBLIC_DOMAIN)
 
 CSRF_TRUSTED_ORIGINS = [
     "https://portify-production-center.up.railway.app",
 ]
+
+if RAILWAY_PUBLIC_DOMAIN:
+    CSRF_TRUSTED_ORIGINS.append(f"https://{RAILWAY_PUBLIC_DOMAIN}")
+
 
 
 # Application definition

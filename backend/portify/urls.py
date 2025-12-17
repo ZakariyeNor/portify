@@ -1,5 +1,11 @@
 from django.contrib import admin
 from django.urls import path, include, re_path
+from django.http import JsonResponse
+
+
+# Health check endpoint for Railway
+def health_check(request):
+    return JsonResponse({"status": "healthy", "service": "portify-backend"})
 
 
 # Swagger
