@@ -36,4 +36,4 @@ RUN chmod +x ./entrypoint.sh
 
 # For development
 # (Default command (overwritten by docker-compose)
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["./entrypoint.sh"]
