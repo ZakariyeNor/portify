@@ -104,7 +104,7 @@ class Projects(models.Model):
     )
     live_url = models.URLField(blank=True, null=True)
     source_code = models.URLField(blank=True, null=True)
-    created_at = models.DateTimeField(default=localdate, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
     
     class Meta:
         verbose_name_plural = 'Projects'
@@ -117,8 +117,8 @@ class Projects(models.Model):
 class Education(models.Model):
     course = models.CharField(max_length=255)
     school = models.CharField(max_length=255)
-    start_date = models.DateField(default=localdate)
-    end_date = models.DateField(default=localdate)
+    start_date = models.DateField(auto_now_add=True)
+    end_date = models.DateField(auto_now_add=True)
 
     class Meta:
         unique_together = ('course', 'start_date', 'end_date')
@@ -174,7 +174,7 @@ class Contact(models.Model):
     email = models.EmailField(blank=False, null=False)
     subject = models.CharField(blank=False, null=False)
     message = models.TextField(blank=False, null=False)
-    created_at = models.DateTimeField(default=localdate, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
     
     class Meta:
         ordering = ['-created_at']
@@ -188,8 +188,8 @@ class Visions(models.Model):
     vision_intro = models.TextField()
     principles_title = models.CharField()
     longterm_title = models.CharField()
-    created_at = models.DateTimeField(default=localdate, blank=True)
-    updated_at = models.DateTimeField(default=localdate, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True)
     
     class Meta:
         verbose_name_plural = 'Visions'
