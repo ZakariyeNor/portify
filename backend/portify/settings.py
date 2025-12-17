@@ -130,14 +130,20 @@ else:
     'default': dj_database_url.parse(env('DATABASE_URL'))
     }
     
-    # Production Redis on Railway
+    # Production Redis on Railway (optional - disable Celery if not available)
     REDIS_URL = env("REDIS_URL", default="")
-    CELERY_BROKER_URL = REDIS_URL if REDIS_URL else "redis://localhost:6379/0"
-    CELERY_RESULT_BACKEND = REDIS_URL if REDIS_URL else "redis://localhost:6379/0"
-    CELERY_ACCEPT_CONTENT = ["json"]
-    CELERY_TASK_SERIALIZER = "json"
-    CELERY_RESULT_SERIALIZER = "json"
-    print(f"Production mode - Using Railway DATABASE_URL and REDIS_URL")
+    if REDIS_URL:
+        CELERY_BROKER_URL = REDIS_URL
+        CELERY_RESULT_BACKEND = REDIS_URL
+        CELERY_ACCEPT_CONTENT = ["json"]
+        CELERY_TASK_SERIALIZER = "json"
+        CELERY_RESULT_SERIALIZER = "json"
+        print(f"Production mode - Using Railway DATABASE_URL and REDIS_URL")
+    else:
+        # No Redis available - Celery tasks will fail gracefully
+        CELERY_TASK_ALWAYS_EAGER = True
+        CELERY_TASK_EAGER_PROPAGATES = True
+        print(f"Production mode - No Redis, Celery tasks run synchronously")
 
 
 # Use SQLite for tests to avoid external dependencies
@@ -223,14 +229,28 @@ print("DEFAULT_FROM_EMAIL =", DEFAULT_FROM_EMAIL)
 print("CONTACT_RECIPIENT_EMAIL =", CONTACT_RECIPIENT_EMAIL)
 
 
-# Caching with redis
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": env("REDIS_CACHE_URL", default="redis://redis:6379/1"),
-        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+
+# Caching with redis (fallback to dummy cache if Redis unavailable)
+REDIS_CACHE_URL = env("REDIS_URL", default=env("REDIS_CACHE_URL", default=""))
+
+if REDIS_CACHE_URL:
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": REDIS_CACHE_URL,
+            "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+        }
     }
-}
+else:
+    # Fallback to local memory cache if Redis not available
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "unique-snowflake",
+        }
+    }
+    print("WARNING: Using local memory cache (no Redis available)")
+
 
 # Timeout
 CACHE_TTL = 60 * 5
