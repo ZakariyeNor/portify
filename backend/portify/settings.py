@@ -12,7 +12,8 @@ import dj_database_url
 # Initialize environ
 env = environ.Env()
 
-# .env is mounted at /app/.env in Docker (backend folder is /app)
+# In Docker/Railway, backend folder is /app (root is /backend on Railway)
+# Look for .env in the backend folder
 BASE_DIR = Path(__file__).resolve().parent.parent
 env_file = BASE_DIR / ".env"
 
@@ -94,7 +95,11 @@ WSGI_APPLICATION = 'portify.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 # DB configuration logic (Docker on development and railway on production)
-if env('LEVEL') == 'development':
+# Railway will have DATABASE_URL set, dev won't
+is_railway = bool(os.environ.get('DATABASE_URL'))
+is_development = os.environ.get('LEVEL') == 'development' or not is_railway
+
+if is_development:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -121,12 +126,13 @@ else:
     }
     
     # Production Redis on Railway
-    REDIS_URL = env("REDIS_URL")
-    CELERY_BROKER_URL = env("REDIS_URL")
-    CELERY_RESULT_BACKEND = env("REDIS_URL")
+    REDIS_URL = env("REDIS_URL", default="")
+    CELERY_BROKER_URL = REDIS_URL if REDIS_URL else "redis://localhost:6379/0"
+    CELERY_RESULT_BACKEND = REDIS_URL if REDIS_URL else "redis://localhost:6379/0"
     CELERY_ACCEPT_CONTENT = ["json"]
     CELERY_TASK_SERIALIZER = "json"
     CELERY_RESULT_SERIALIZER = "json"
+    print(f"Production mode - Using Railway DATABASE_URL and REDIS_URL")
 
 
 # Use SQLite for tests to avoid external dependencies
