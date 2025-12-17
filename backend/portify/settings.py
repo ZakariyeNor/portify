@@ -108,7 +108,7 @@ WSGI_APPLICATION = 'portify.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-LEVEL = env("LEVEL", "development")
+LEVEL = env("LEVEL", cast=str, default="development")
 print("The level is= ", LEVEL)
 if LEVEL == "development":
     DATABASES = {
@@ -280,17 +280,12 @@ DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 LOGGING_LEVEL = logging.DEBUG if DEBUG else logging.INFO
 
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
             'format': '[{levelname}] {asctime} {name} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '[{levelname}] {message}',
             'style': '{',
         },
     },
@@ -300,12 +295,6 @@ LOGGING = {
             'formatter': 'verbose',
             'stream': sys.stdout,
         },
-        # Optional: file logging
-        'file': {
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'logs/django.log',
-            'formatter': 'verbose',
-        },
     },
     'loggers': {
         'django': {
@@ -313,16 +302,10 @@ LOGGING = {
             'level': LOGGING_LEVEL,
             'propagate': True,
         },
-        # Example: custom app logger
         'portfolio': {
             'handlers': ['console'],
             'level': LOGGING_LEVEL,
             'propagate': False,
         },
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
-        },
-
     },
 }

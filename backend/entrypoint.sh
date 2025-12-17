@@ -69,5 +69,5 @@ else
         exit 1
     fi
     echo "Starting Django production server on port $PORT..."
-    exec gunicorn portify.wsgi:application --bind 0.0.0.0:$PORT --workers 3
+    exec sh -c "gunicorn portify.wsgi:application --bind 0.0.0.0:$PORT --workers 3"
 fi
