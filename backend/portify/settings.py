@@ -21,7 +21,12 @@ if env_file.exists():
     env.read_env(env_file)
     print(f"DEBUG: .env file loaded from {env_file}")
 else:
-    print("WARNING: No .env file found, using environment variables")
+    # Only warn if running locally (not on Railway)
+    is_railway = bool(os.environ.get('DATABASE_URL'))
+    if not is_railway:
+        print("WARNING: No .env file found, using environment variables")
+    else:
+        print("INFO: Running on Railway - using environment variables from dashboard")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('DJANGO_SECRET_KEY')
