@@ -68,8 +68,10 @@ else
         echo "ERROR: PORT environment variable is not set!"
         exit 1
     fi
-    echo "Starting Django production server on port ${PORT:-8000}..."
-    exec sh -c "gunicorn portify.wsgi:application --bind 0.0.0.0:${PORT:-8000}--workers 3"
-    gunicorn app:app --bind [::]:${PORT:-8000}
+
+    echo "Starting Django production server on port $PORT..."
+    exec gunicorn portify.wsgi:application \
+        --bind 0.0.0.0:$PORT \
+        --workers 3
 
 fi
