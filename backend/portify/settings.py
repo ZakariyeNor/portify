@@ -6,7 +6,6 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 import dj_database_url
-import logging
 
 
 # Initialize environ
@@ -282,36 +281,3 @@ cloudinary.config(secure=True)
 
 # Use Cloudinary storage for media files
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-
-
-LOGGING_LEVEL = logging.DEBUG if DEBUG else logging.INFO
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '[{levelname}] {asctime} {name} {message}',
-            'style': '{',
-        },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
-            'stream': sys.stdout,
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': LOGGING_LEVEL,
-            'propagate': True,
-        },
-        'portfolio': {
-            'handlers': ['console'],
-            'level': LOGGING_LEVEL,
-            'propagate': False,
-        },
-    },
-}
