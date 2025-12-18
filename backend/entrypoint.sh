@@ -6,28 +6,105 @@ set -e
 echo "Starting Django container entrypoint..."
 
 # Wait for Postgres to be ready
-echo "Waiting for Postgres to be ready on '$POSTGRES_HOST', $POSTGRES_PORT..."
+echo "LEVEL=$LEVEL"
 
-until python3 -c "
-import psycopg2
-import sys
-import os
+# Try connecting to Postgres every second until successful or MAX_TRIES reached
+MAX_TRIES=60
+TRIES=0
+
+# For development environment Postgres connection
+wait_for_postgres_dev() {
+  echo "Waiting for PostgreSQL (development: POSTGRES_*)..."
+
+  until python3 - << END
+import psycopg2, os, sys
 try:
-    conn = psycopg2.connect(
-        dbname=os.environ['POSTGRES_DB'],
-        user=os.environ['POSTGRES_USER'],
-        password=os.environ['POSTGRES_PASSWORD'],
-        host=os.environ['POSTGRES_HOST'],
-        port=os.environ['POSTGRES_PORT']
+    psycopg2.connect(
+        dbname=os.environ["POSTGRES_DB"],
+        user=os.environ["POSTGRES_USER"],
+        password=os.environ["POSTGRES_PASSWORD"],
+        host=os.environ["POSTGRES_HOST"],
+        port=os.environ["POSTGRES_PORT"],
     )
-    conn.close()
     sys.exit(0)
-except psycopg2.OperationalError:
+except Exception:
     sys.exit(1)
-" 2>/dev/null; do
-  echo "Postgres is unavailable - sleeping"
-  sleep 1
-done
+END
+  do
+    TRIES=$((TRIES+1))
+    if [ "$TRIES" -ge "$MAX_TRIES" ]; then
+      echo "ERROR: Postgres (dev) did not become available"
+      exit 1
+    fi
+    echo "Postgres is unavailable - sleeping ($TRIES/$MAX_TRIES)"
+    sleep 1
+  done
+}
+# For production environment Postgres connection
+wait_for_postgres_prod() {
+  echo "Waiting for PostgreSQL (production: DATABASE_URL)..."
+
+  until python3 - << END
+import psycopg2, os, sys
+try:
+    psycopg2.connect(os.environ["DATABASE_URL"])
+    sys.exit(0)
+except Exception:
+    sys.exit(1)
+END
+  do
+    TRIES=$((TRIES+1))
+    if [ "$TRIES" -ge "$MAX_TRIES" ]; then
+      echo "ERROR: Postgres (prod) did not become available"
+      exit 1
+    fi
+    echo "Postgres is unavailable - sleeping ($TRIES/$MAX_TRIES)"
+    sleep 1
+  done
+}
+
+# Wait for Redis to be ready
+wait_for_redis() {
+  echo "Waiting for Redis..."
+
+  MAX_TRIES=60
+  TRIES=0
+
+  until python3 - << END
+import redis, os, sys
+try:
+    r = redis.from_url(os.environ.get("REDIS_URL", "redis://localhost:6379/0"))
+    r.ping()
+    sys.exit(0)
+except Exception:
+    sys.exit(1)
+END
+  do
+    TRIES=$((TRIES+1))
+    if [ "$TRIES" -ge "$MAX_TRIES" ]; then
+      echo "ERROR: Redis did not become available"
+      exit 1
+    fi
+    echo "Redis is unavailable - sleeping ($TRIES/$MAX_TRIES)"
+    sleep 1
+  done
+}
+
+
+# Decide which wait logic to use
+if [ "$LEVEL" = "development" ]; then
+  wait_for_postgres_dev
+else
+  wait_for_postgres_prod
+  wait_for_redis
+fi
+
+# Continue with migrations
+echo "Postgres is up and database is accessible - continuing..."
+
+# ----------------------------
+# Django startup
+# ----------------------------
 
 # Collect static files
 echo "Collect static files..."
@@ -40,9 +117,6 @@ if [ -d "staticfiles" ]; then
 else
     echo "No static files collected."
 fi
-
-# Continue with migrations
-echo "Postgres is up and database is accessible - continuing..."
 
 # Show migration plan
 echo "Migration plan:"
