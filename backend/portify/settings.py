@@ -38,7 +38,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '0.0.0.0',
-    'portify-production.up.railway.app',
+    'https://portify-production.up.railway.app',
 ]
 
 
@@ -265,12 +265,19 @@ else:
 # Timeout
 CACHE_TTL = 60 * 5
 
-# CORS headers
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:3000",
-]
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS dev and prod logic
+if LEVEL == "development":
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:8000",
+        "http://127.0.0.1:3000",
+        'https://portify-production.up.railway.app',
+    ]
+else:
+    CORS_ALLOWED_ORIGINS = [
+        'https://portify-production.up.railway.app',
+    ]
+
+CORS_ALLOW_ALL_ORIGINS = False  
 
 
 # Cloudinary configuration
