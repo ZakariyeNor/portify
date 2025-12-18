@@ -276,6 +276,14 @@ else:
     CORS_ALLOWED_ORIGINS = [
         'https://portify-production.up.railway.app',
     ]
+    CSRF_TRUSTED_ORIGINS = [
+        "https://portify-production.up.railway.app",
+    ]
+        # Production Security Settings
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
 
 CORS_ALLOW_ALL_ORIGINS = False  
 
