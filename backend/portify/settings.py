@@ -38,7 +38,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '0.0.0.0',
-    'https://portify-production.up.railway.app',
+    'portify-production.up.railway.app',
 ]
 
 
@@ -114,7 +114,7 @@ WSGI_APPLICATION = 'portify.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 LEVEL = env("LEVEL", cast=str, default="development")
-print("The level is= ", LEVEL)
+print("The level is = ", LEVEL)
 if LEVEL == "development":
     DATABASES = {
         'default': {
@@ -283,9 +283,11 @@ else:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+    
+    SESSION_COOKIE_DOMAIN = 'portify-production.up.railway.app'
+    SESSION_COOKIE_HTTPONLY = True 
 
-
-CORS_ALLOW_ALL_ORIGINS = False  
+    CORS_ALLOW_ALL_ORIGINS = False  
 
 
 # Cloudinary configuration
