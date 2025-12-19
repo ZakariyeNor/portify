@@ -134,6 +134,7 @@ class SkillCategorySerializer(serializers.ModelSerializer):
 # Certificate serializers
 class CertificateSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
+    resume = serializers.SerializerMethodField()
     
     class Meta:
         model = Certificate
@@ -143,6 +144,12 @@ class CertificateSerializer(serializers.ModelSerializer):
     def get_image(self, obj):
         if obj.image:
             return obj.image.build_url()
+        return None
+    
+    # Get resume url
+    def get_resume(self, obj):
+        if obj.resume:
+            return obj.resume.build_url()
         return None
 
 """ Contact """
