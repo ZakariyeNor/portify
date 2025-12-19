@@ -70,7 +70,7 @@ const SkillsPage = () => {
           {/* Download CV */}
           <div className="relative w-full ml-10 mb-10 -mt-5">
             <Link
-              href={`http://localhost:8000${skillsData.certificates[0].resume}`}
+              href={skillsData.certificates[0].resume}
               target="_blank"
               rel="noopener noreferrer"
               download={true}
@@ -147,17 +147,27 @@ const SkillsPage = () => {
         <h2 className="font-extrabold text-3xl">Certificates</h2>
 
         {skillsData && skillsData.certificates.length > 0 && (
-          <div className="carousel carousel-center space-x-4 p-2 overflow-x-auto">
+          <div className="carousel carousel-center space-x-4 p-2 overflow-x-auto bg-blue-300/60 rounded-lg">
             {skillsData.certificates.map((cert) => (
               <div
                 key={cert.id}
-                className="carousel-item shrink-0 w-[80%] sm:w-[60%] md:w-[45%] lg:w-[22%]"
+                className=" carousel-item shrink-0 flex flex-col
+                  w-60 h-80 sm:w-[300px] sm:h-[400px] 
+                  md:w-[360px] md:h-[480px] lg:w-[380px] lg:h-[506px] 
+                  xl:w-[420px] xl:h-[560px]"
               >
                 <img
-                  src={`http://localhost:8000${cert.image}`}
+                  src={cert.image}
                   alt={cert.name}
-                  className="h-48 w-full object-cover rounded-lg"
+                  className=" w-full h-[65%] object-contain rounded-lg bg-white"
                 />
+
+                <div className="
+                      bg-gray-200/20 mt-4 p-4 rounded-2xl
+                      text-sm sm:text-base md:text-lg font-semibold"
+                >
+                  {cert.name}
+                </div>
               </div>
             ))}
           </div>

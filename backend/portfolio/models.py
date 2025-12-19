@@ -117,8 +117,8 @@ class Projects(models.Model):
 class Education(models.Model):
     course = models.CharField(max_length=255)
     school = models.CharField(max_length=255)
-    start_date = models.DateField(auto_now_add=True)
-    end_date = models.DateField(auto_now_add=True)
+    start_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
 
     class Meta:
         unique_together = ('course', 'start_date', 'end_date')
