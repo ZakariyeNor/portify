@@ -38,6 +38,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '0.0.0.0',
+    'api.theowner.me',
     'portify-production.up.railway.app',
 ]
 
@@ -48,6 +49,7 @@ if BACKEND_PUBLIC_DOMAIN:
 # Base CSRF trusted origins
 CSRF_TRUSTED_ORIGINS = [
     "https://portify-production.up.railway.app",
+    'https://api.theowner.me',
 ]
 
 # Add Railway public domain to CSRF trusted origins
@@ -281,6 +283,8 @@ if LEVEL == "development":
 else:
     # Production frontend domains
     production_frontends = [
+        "https://theowner.me",
+        "https://www.theowner.me",
         "https://portify-frontend-sigma.vercel.app",
     ]
     
