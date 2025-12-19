@@ -1,14 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
     remotePatterns: [
+      // Cloudinary production images
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '8000',
-        pathname: '/media/**',
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/dcxbs1lon/**",
       },
     ],
     unoptimized: true,
