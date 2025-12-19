@@ -35,6 +35,8 @@ const HomePage = () => {
                 if (response.data.length === 0) {
                     setError(["No profile found"]);
                     setUserData(null);
+                    console.log(response.data)
+                    
                 } else {
                     setUserData(response.data);
                     setError(null);
@@ -49,6 +51,7 @@ const HomePage = () => {
 
         fetchProfile();
     }, [])
+    
 
     // Show loading if fetching
     if (loading) return <p className='flex justify-center items-center min-h-screen

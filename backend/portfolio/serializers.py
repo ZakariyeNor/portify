@@ -13,10 +13,17 @@ class ProfileSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source='user.first_name')
     last_name = serializers.CharField(source='user.last_name')
     email = serializers.EmailField(source='user.email')
+    image = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
         fields = ['id', 'first_name', 'last_name', 'email', 'intro', 'image']
+        
+    # Get image url
+    def get_image(self, obj):
+        if obj.image:
+            return obj.image.build_url()
+        return None
         
     # create a new user object
     def create(self, validated_data):
@@ -52,6 +59,8 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 """ Projects serializer """
 class ProjectsSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+    
     tech = serializers.SlugRelatedField(
         queryset=Tech.objects.all(),
         many=True,
@@ -65,7 +74,17 @@ class ProjectsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Projects
-        fields = ['id', 'name', 'intro', 'docs', 'image', 'category', 'tech', 'main_tech', 'live_url', 'source_code', 'created_at']
+        fields = [
+            'id', 'name', 'intro', 'docs', 'image',
+            'category', 'tech', 'main_tech', 'live_url',
+            'source_code', 'created_at'
+        ]
+    
+    # Get image url
+    def get_image(self, obj):
+        if obj.image:
+            return obj.image.build_url()
+        return None
 
 """ Skills serializers """
 
@@ -114,10 +133,17 @@ class SkillCategorySerializer(serializers.ModelSerializer):
 
 # Certificate serializers
 class CertificateSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+    
     class Meta:
         model = Certificate
         fields = ['id', 'name', 'image', 'resume', 'about']
 
+    # Get image url
+    def get_image(self, obj):
+        if obj.image:
+            return obj.image.build_url()
+        return None
 
 """ Contact """
 class ContactSerializer(serializers.ModelSerializer):

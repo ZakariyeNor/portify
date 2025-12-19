@@ -151,16 +151,16 @@ const ProjectsLayout = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {filteredProjects && filteredProjects.map((project) => (
                     <div key={project.id} className="card bg-base-100 w-full shadow-sm">
-
-                        <Image
-                            src={project.image}
-                            alt={project.name}
-                            width={300}
-                            height={300}
-                            loading="eager"
-                            className="w-full object-cover rounded-lg"
-                        />
-
+                        <div className="w-full h-64 overflow-hidden rounded-lg">
+                            <Image
+                                src={project.image}
+                                alt={project.name}
+                                width={300}
+                                height={300}
+                                loading="eager"
+                                className="w-full object-cover rounded-lg"
+                            />
+                        </div>
                         <Link href={`/projects/${project.id}`}>
                             <div className="card-body">
                                 <h2 className="card-title">{project.name}</h2>
