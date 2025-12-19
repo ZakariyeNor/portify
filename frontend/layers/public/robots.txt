@@ -8,8 +8,8 @@ Disallow: /admin
 Disallow: /api
 
 # Host
-Host: https://portify-production.up.railway.app
+Host: https://api.theowner.me
 
 # Sitemaps
-Sitemap: https://portify-production.up.railway.app/sitemap.xml
-Sitemap: https://portify-production.up.railway.app/server-sitemap.xml
+Sitemap: https://api.theowner.me/sitemap.xml
+Sitemap: https://api.theowner.me/server-sitemap.xml
