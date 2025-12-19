@@ -32,8 +32,8 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
 
-# Railway provides RAILWAY_PUBLIC_DOMAIN
-RAILWAY_PUBLIC_DOMAIN = env('RAILWAY_PUBLIC_DOMAIN', default='')
+# Railway provides BACKEND_PUBLIC_DOMAIN
+BACKEND_PUBLIC_DOMAIN = env('BACKEND_PUBLIC_DOMAIN', default='')
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
@@ -41,22 +41,20 @@ ALLOWED_HOSTS = [
     'portify-production.up.railway.app',
 ]
 
+# Add Railway public domain to allowed hosts
+if BACKEND_PUBLIC_DOMAIN:
+    ALLOWED_HOSTS.append(BACKEND_PUBLIC_DOMAIN)
 
-
-if RAILWAY_PUBLIC_DOMAIN:
-    ALLOWED_HOSTS.append(RAILWAY_PUBLIC_DOMAIN)
-
+# Base CSRF trusted origins
 CSRF_TRUSTED_ORIGINS = [
-    "https://portify-production-center.up.railway.app",
+    "https://portify-production.up.railway.app",
 ]
 
-if RAILWAY_PUBLIC_DOMAIN:
-    CSRF_TRUSTED_ORIGINS.append(f"https://{RAILWAY_PUBLIC_DOMAIN}")
-
-
+# Add Railway public domain to CSRF trusted origins
+if BACKEND_PUBLIC_DOMAIN:
+    CSRF_TRUSTED_ORIGINS.append(f"https://{BACKEND_PUBLIC_DOMAIN}")
 
 # Application definition
-
 INSTALLED_APPS = [
     # Default apps
     'django.contrib.admin',
@@ -77,13 +75,17 @@ INSTALLED_APPS = [
     "portfolio",
 ]
 
+# Middleware
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
+    
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    
+    "corsheaders.middleware.CorsMiddleware",
+    
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    "django.middleware.common.CommonMiddleware",
+    
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -92,6 +94,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'portify.urls'
 
+# Templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -261,34 +264,46 @@ else:
     }
     print("WARNING: Using local memory cache (no Redis available)")
 
-
 # Timeout
 CACHE_TTL = 60 * 5
 
 # CORS dev and prod logic
 if LEVEL == "development":
     CORS_ALLOWED_ORIGINS = [
-        "http://localhost:8000",
+        "http://localhost:3000",
         "http://127.0.0.1:3000",
-        'https://portify-production.up.railway.app',
     ]
+
+    CSRF_TRUSTED_ORIGINS += [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ]
+
 else:
-    CORS_ALLOWED_ORIGINS = [
-        'https://portify-production.up.railway.app',
+    # Production frontend domains
+    production_frontends = [
+        "https://portify-frontend-sigma.vercel.app",
     ]
-    CSRF_TRUSTED_ORIGINS = [
-        "https://portify-production.up.railway.app",
-    ]
-        # Production Security Settings
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    
+    CORS_ALLOWED_ORIGINS =  production_frontends
+    CSRF_TRUSTED_ORIGINS += production_frontends
+    
+    # Block other origins
+    CORS_ALLOW_ALL_ORIGINS = False
+    
+    # Allow credentials to be sent
+    CORS_ALLOW_CREDENTIALS = True
+    
+    # Cookie settings for cross-site requests    
+    SESSION_COOKIE_SAMESITE = 'None'
+    CSRF_COOKIE_SAMESITE = 'None'
+    
+    # Secure cookies for cross-site requests
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     
-    SESSION_COOKIE_DOMAIN = 'portify-production.up.railway.app'
-    SESSION_COOKIE_HTTPONLY = True 
-
-    CORS_ALLOW_ALL_ORIGINS = False  
-
+    # Use X-Forwarded-Proto header to determine if request is secure
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Cloudinary configuration
 CLOUDINARY_URL = env("CLOUDINARY_URL", default="")
