@@ -11,7 +11,8 @@ import { IoIosCode } from 'react-icons/io'
 import api from '@/lib/axios'
 import { useParams } from 'next/navigation';
 import { techColors } from './techColors'
-import Marquee from 'react-fast-marquee'
+import Marquee from 'react-fast-marquee';
+
 
 // Individual project interface
 interface Assessment {
@@ -26,6 +27,8 @@ interface individualProject {
     name: string;
     intro: string;
     docs: string;
+    docs_body: string;
+    docs_footer: string;
     image: string;
     category: string;
     tech: string[];
@@ -122,9 +125,15 @@ const ProjectDetails = () => {
                         {/* Left content */}
                         <div className="lg:w-2/3 flex flex-col space-y-6 mb-6 lg:mb-0">
                             <div>
-                                <h2 className="font-bold text-lg sm:text-xl md:text-2xl mb-2">Project Docs</h2>
+                                <h2 className="font-bold text-lg sm:text-xl md:text-2xl mb-2">Project Overview</h2>
                                 <p className="text-gray-700 text-sm sm:text-base md:text-lg">
                                     {individualProject.docs}
+                                </p>
+                            </div>
+                            <div>
+                                <h2 className="font-bold text-lg sm:text-xl md:text-2xl mb-2">My Role & Responsibilities</h2>
+                                <p className="text-gray-700 text-sm sm:text-base md:text-lg">
+                                    {individualProject.docs_body}
                                 </p>
                             </div>
                         </div>
@@ -189,7 +198,7 @@ const ProjectDetails = () => {
                         </div>
                     </div>
 
-                    {/* Assessment reposrts */}
+                     {/* Assessment reposrts */}
                     <div className="flex flex-col mt-6 md:mt-10 px-4 md:px-0">
                         <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">Assessment Reports</h1>
                         <p className="text-sm md:text-base text-gray-600">This is the Assessment results from the assessors</p>
