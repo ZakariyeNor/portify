@@ -16,7 +16,7 @@ class ProfileAdmin(admin.ModelAdmin):
 class AssessmentImageAdmin(admin.TabularInline):
     model = AssessmentImage
     extra = 1
-    min_num = 2
+    min_num = 0
     ordering = ("title",)
 
 # --- Create an Admin class for Projects to customize its appearance ---
