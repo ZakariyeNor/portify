@@ -17,7 +17,6 @@ distlib==0.4.0
 dj-database-url==3.0.1
 Django==5.2.7
 django-celery-beat==2.8.1
-django-ckeditor==6.7.3
 django-cloudinary-storage==0.3.0
 django-cors-headers==4.9.0
 django-environ==0.12.0
