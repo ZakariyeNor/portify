@@ -11,6 +11,15 @@ import { IoIosCode } from 'react-icons/io'
 import api from '@/lib/axios'
 import { useParams } from 'next/navigation';
 import { techColors } from './techColors'
+import Marquee from 'react-fast-marquee'
+
+// Individual project interface
+interface Assessment {
+    id: number;
+    title: string;
+    description: string;
+    image: string;
+}
 
 interface individualProject {
     id: number;
@@ -22,6 +31,7 @@ interface individualProject {
     tech: string[];
     live_url: string;
     source_code: string;
+    assessment: Assessment[];
 }
 
 
@@ -112,13 +122,7 @@ const ProjectDetails = () => {
                         {/* Left content */}
                         <div className="lg:w-2/3 flex flex-col space-y-6 mb-6 lg:mb-0">
                             <div>
-                                <h2 className="font-bold text-lg sm:text-xl md:text-2xl mb-2">Project Overview</h2>
-                                <p className="text-gray-700 text-sm sm:text-base md:text-lg">
-                                    {individualProject.docs}
-                                </p>
-                            </div>
-                            <div>
-                                <h2 className="font-bold text-lg sm:text-xl md:text-2xl mb-2">My Role & Responsibilities</h2>
+                                <h2 className="font-bold text-lg sm:text-xl md:text-2xl mb-2">Project Docs</h2>
                                 <p className="text-gray-700 text-sm sm:text-base md:text-lg">
                                     {individualProject.docs}
                                 </p>
@@ -153,7 +157,7 @@ const ProjectDetails = () => {
                                 <h3 className="font-semibold text-base sm:text-lg">Project Links</h3>
 
                                 {/* Live Project */}
-                                <Link  href={individualProject.live_url} target='_blank' rel="noopener noreferrer">
+                                <Link href={individualProject.live_url} target='_blank' rel="noopener noreferrer">
                                     <div className="relative w-full">
                                         {/* Icon first */}
                                         <RxExternalLink className='absolute top-1/2 left-4 -translate-y-1/2 text-lg text-white' />
@@ -182,6 +186,52 @@ const ProjectDetails = () => {
                             </div>
 
 
+                        </div>
+                    </div>
+
+                    {/* Assessment reposrts */}
+                    <div className="flex flex-col mt-6 md:mt-10 px-4 md:px-0">
+                        <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">Assessment Reports</h1>
+                        <p className="text-sm md:text-base text-gray-600">This is the Assessment results from the assessors</p>
+
+                        <div className="mt-6 -ml-15 -mr-15 overflow-hidden">
+                            <Marquee pauseOnHover speed={20}>
+                                <div className="flex gap-x-4 md:gap-x-6 lg:gap-x-8 px-4">
+                                    {individualProject.assessment.map((assessment) => (
+                                        <div
+                                            key={assessment.id}
+                                            className="shrink-0 flex flex-col w-[75vw] sm:w-[350px] md:w-[450px]
+                                            lg:w-[550px] h-auto rounded-xl overflow-hidden shadow-sm m-2"
+                                        >
+                                            {/* Image Container: object-contain ensures the WHOLE image is seen */}
+                                            <div className="w-full bg-black/5 flex items-center justify-center">
+                                                <Image
+                                                    src={assessment.image}
+                                                    alt={assessment.title}
+                                                    width={600}
+                                                    height={400}
+                                                    /* object-contain is key to seeing the whole image */
+                                                    className="w-full h-auto object-contain"
+                                                    unoptimized
+                                                />
+                                            </div>
+
+                                            {/* Text Container: padding scales down on small screens */}
+                                            <div className="p-3 md:p-5 flex flex-col gap-y-1 md:gap-y-2">
+                                                <h3 className="font-bold text-sm md:text-lg lg:text-xl text-gray-900 leading-tight">
+                                                    {/* Removed truncate so full title shows */}
+                                                    {assessment.title}
+                                                </h3>
+                                                <p className="text-xs md:text-sm lg:text-base text-gray-700 leading-normal">
+                                                    {/* Removed line-clamp so full description shows */}
+                                                    {assessment.description}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    ))}
+                                </div>
+                            </Marquee>
                         </div>
                     </div>
                 </>

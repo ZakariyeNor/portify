@@ -113,6 +113,23 @@ class Projects(models.Model):
     def __str__(self):
         return f"The project {self.name} | created at {self.created_at}"
 
+# Assessments model
+class AssessmentImage(models.Model):
+    project = models.ForeignKey(
+        Projects, 
+        on_delete=models.CASCADE, 
+        related_name="assessment_images"
+    )
+    image = CloudinaryField(
+        'image', folder='portify/assessments/'
+    )
+    title = models.CharField(max_length=255, blank=True, null=True)  # e.g., LO1, LO2...
+    description = models.CharField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Assessment {self.title} for {self.project.name}"
+
+
 # Education model
 class Education(models.Model):
     course = models.CharField(max_length=255)
