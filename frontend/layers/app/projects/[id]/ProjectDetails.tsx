@@ -26,6 +26,7 @@ interface individualProject {
     name: string;
     intro: string;
     docs: string;
+    docs_html: string;
     image: string;
     category: string;
     tech: string[];
@@ -121,12 +122,11 @@ const ProjectDetails = () => {
                     <div className="flex flex-col lg:flex-row lg:space-x-8">
                         {/* Left content */}
                         <div className="lg:w-2/3 flex flex-col space-y-6 mb-6 lg:mb-0">
-                            <div>
+                            {/* Project Docs */}
                                 <h2 className="font-bold text-lg sm:text-xl md:text-2xl mb-2">Project Docs</h2>
-                                <p className="text-gray-700 text-sm sm:text-base md:text-lg">
-                                    {individualProject.docs}
-                                </p>
-                            </div>
+                                <div className="text-gray-700 text-sm sm:text-base md:text-lg"
+                                    dangerouslySetInnerHTML={{ __html: individualProject.docs_html }}
+                                />
                         </div>
 
                         {/* Right content */}

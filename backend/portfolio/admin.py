@@ -5,10 +5,12 @@ from .models import (
     Certificate, Contact, Visions,
     Principle, LongTerm, AssessmentImage
 )
+from django import forms
+from django.contrib.admin.widgets import AdminTextareaWidget
 
 # --- Register Profile model in admin. ---
 @admin.register(Profile)
-class ProfileAdmin(admin.ModelAdmin):
+class ProfileAdminForm(admin.ModelAdmin):
     search_fields = 'username'
     search_fields = ['username']
 
@@ -20,9 +22,18 @@ class AssessmentImageAdmin(admin.TabularInline):
     ordering = ("title",)
 
 # --- Create an Admin class for Projects to customize its appearance ---
+class ProjectAdminForm(forms.ModelForm):
+    class Meta:
+        model = Projects
+        fields = '__all__'
+        widgets = {
+            'docs': AdminTextareaWidget(attrs={'rows': 4, 'cols': 40}),
+        }
+
 @admin.register(Projects)
 class ProjectsAdmin(admin.ModelAdmin):
-    filter_horizontal = ('tech', 'main_tech',) 
+    form = ProjectAdminForm
+    filter_horizontal = ('tech', 'main_tech',)
     list_display = ('name', 'created_at',)
     search_fields = ('name', 'category',)
     inlines = [AssessmentImageAdmin]
