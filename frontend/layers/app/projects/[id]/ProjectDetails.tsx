@@ -126,14 +126,21 @@ const ProjectDetails = () => {
                         <div className="lg:w-2/3 flex flex-col space-y-6 mb-6 lg:mb-0">
                             <div>
                                 <h2 className="font-bold text-lg sm:text-xl md:text-2xl mb-2">Project Overview</h2>
+                                <h4 className="text-lg sm:text-xl md:text-xl mb-2 mt-2">Intro</h4>
                                 <p className="text-gray-700 text-sm sm:text-base md:text-lg">
                                     {individualProject.docs}
                                 </p>
                             </div>
                             <div>
-                                <h2 className="font-bold text-lg sm:text-xl md:text-2xl mb-2">My Role & Responsibilities</h2>
+                                <h4 className="text-lg sm:text-xl md:text-xl mb-2 mt-2">Features</h4>
                                 <p className="text-gray-700 text-sm sm:text-base md:text-lg">
                                     {individualProject.docs_body}
+                                </p>
+                            </div>
+                            <div>
+                                <h4 className="text-lg sm:text-xl md:text-xl mb-2 mt-2">Technical</h4>
+                                <p className="text-gray-700 text-sm sm:text-base md:text-lg">
+                                    {individualProject.docs_footer}
                                 </p>
                             </div>
                         </div>
