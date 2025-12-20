@@ -279,6 +279,7 @@ if LEVEL == "development":
 
     CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
     CORS_ALLOW_CREDENTIALS = True
+    CORS_ALLOW_ALL_ORIGINS = True
 
 else:
     # Production frontend domains

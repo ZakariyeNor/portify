@@ -3,7 +3,7 @@ from .models import (
     Profile, Projects, Tech,
     Education, SkillCategory, Skill,
     Certificate, Contact, Visions,
-    Principle, LongTerm
+    Principle, LongTerm, AssessmentImage
 )
 from django.contrib.auth.models import User
 
@@ -57,9 +57,24 @@ class ProfileSerializer(serializers.ModelSerializer):
 
         return instance
 
+""" Assessment Image Serializer """
+class AssessmentImageSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = AssessmentImage
+        fields = ['id', 'project', 'title', 'description', 'image']
+    
+    # Get image url
+    def get_image(self, obj):
+        if obj.image:
+            return obj.image.build_url()
+        return None
+
 """ Projects serializer """
 class ProjectsSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
+    assessment = AssessmentImageSerializer(source='assessment_images', many=True, read_only=True)
     
     tech = serializers.SlugRelatedField(
         queryset=Tech.objects.all(),
@@ -77,7 +92,7 @@ class ProjectsSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'name', 'intro', 'docs', 'image',
             'category', 'tech', 'main_tech', 'live_url',
-            'source_code', 'created_at'
+            'source_code', 'assessment', 'created_at'
         ]
     
     # Get image url

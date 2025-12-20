@@ -3,7 +3,7 @@ from .models import (
     Profile, Projects, Tech,
     Education, SkillCategory, Skill,
     Certificate, Contact, Visions,
-    Principle, LongTerm
+    Principle, LongTerm, AssessmentImage
 )
 
 # --- Register Profile model in admin. ---
@@ -12,11 +12,22 @@ class ProfileAdmin(admin.ModelAdmin):
     search_fields = 'username'
     search_fields = ['username']
 
+# --- Register the assessment images ---
+class AssessmentImageAdmin(admin.TabularInline):
+    model = AssessmentImage
+    extra = 1
+    min_num = 2
+    ordering = ("title",)
+
 # --- Create an Admin class for Projects to customize its appearance ---
 @admin.register(Projects)
 class ProjectsAdmin(admin.ModelAdmin):
     filter_horizontal = ('tech', 'main_tech',) 
     list_display = ('name', 'created_at',)
+    search_fields = ('name', 'category',)
+    inlines = [AssessmentImageAdmin]
+    ordering = ('-created_at',)
+
 
 # --- Register the tech ---
 @admin.register(Tech)
