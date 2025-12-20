@@ -6,6 +6,8 @@ from .models import (
     Principle, LongTerm, AssessmentImage
 )
 from django.contrib.auth.models import User
+from django.template.defaultfilters import linebreaks
+
 
 """ Profile serializer """
 class ProfileSerializer(serializers.ModelSerializer):
@@ -75,6 +77,7 @@ class AssessmentImageSerializer(serializers.ModelSerializer):
 class ProjectsSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
     assessment = AssessmentImageSerializer(source='assessment_images', many=True, read_only=True)
+    docs_html = serializers.SerializerMethodField()
     
     tech = serializers.SlugRelatedField(
         queryset=Tech.objects.all(),
@@ -90,7 +93,7 @@ class ProjectsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Projects
         fields = [
-            'id', 'name', 'intro', 'docs', 'image',
+            'id', 'name', 'intro', 'docs', 'docs_html', 'image',
             'category', 'tech', 'main_tech', 'live_url',
             'source_code', 'assessment', 'created_at'
         ]
@@ -100,6 +103,10 @@ class ProjectsSerializer(serializers.ModelSerializer):
         if obj.image:
             return obj.image.build_url()
         return None
+
+    # Get docs as HTML
+    def get_docs_html(self, obj):
+        return linebreaks(obj.docs)
 
 """ Skills serializers """
 
