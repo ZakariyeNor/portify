@@ -4,7 +4,7 @@ from django.utils.timezone import localdate
 
 from cloudinary.models import CloudinaryField
 
-from ckeditor.fields import RichTextField
+
 
 
 # user info model
@@ -88,7 +88,9 @@ CATEGORY_CHOICES = [
 class Projects(models.Model):
     name = models.CharField(unique=True, blank=False, null=False, max_length=50)
     intro = models.CharField(max_length=150, unique=True, blank=False, null=False)
-    docs = RichTextField(blank=True, null=True)
+    docs = models.TextField()
+    docs_body = models.TextField(null=True, blank=True)
+    docs_footer = models.TextField(null=True, blank=True)
     image = CloudinaryField(
         'image', folder='portify/projects/', blank=True, null=True
     )
