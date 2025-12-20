@@ -81,6 +81,7 @@ CATEGORY_CHOICES = [
     ('cli', 'CLI Apps'),
     ('fullstack', 'Full-Stack Web App'),
     ('ecommerce', 'E-Commerce Web App'),
+    ('pwa', 'Progressive Web App (PWA)'),
 ]
 
 # Projects model
