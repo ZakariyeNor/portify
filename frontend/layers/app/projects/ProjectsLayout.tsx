@@ -153,20 +153,14 @@ const ProjectsLayout = () => {
                 {filteredProjects && filteredProjects.map((project) => (
                     <div key={project.id} className="card bg-base-100 w-full shadow-sm">
                         <div className="w-full h-64 overflow-hidden rounded-lg">
-                            {project.image ? (
-                                <Image
-                                    src={project.image}
-                                    alt={project.name}
-                                    width={300}
-                                    height={300}
-                                    loading="eager"
-                                    className="w-full object-cover rounded-lg"
-                                />
-                            ) : (
-                                <div className="w-full h-full bg-gray-200 flex items-center justify-center rounded-lg">
-                                    <span className="text-gray-500">No Image</span>
-                                </div>
-                            )}
+                            <Image
+                                src={project.image}
+                                alt={project.name}
+                                width={300}
+                                height={300}
+                                loading="eager"
+                                className="w-full object-cover rounded-lg"
+                            />
                         </div>
                         <Link href={`/projects/${project.id}`}>
                             <div className="card-body">
