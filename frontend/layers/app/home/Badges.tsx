@@ -105,12 +105,12 @@ function Badges() {
     ];
 
     return (
-        <div className="m-4 mt-auto pb-20">
+        <div className="m-4 mt-auto pb-20" data-theme="light">
             <Marquee gradient>
                 {badges.map((badge, idx) => (
                     <div className='badges' key={idx}>
                         <div
-                            className={`icons h-13 flex justify-center items-center mx-1 p-2 rounded-xl ${badge.bg}`}>
+                            className={`badge-icons h-13 flex justify-center items-center mx-1 p-2 rounded-xl ${badge.bg}`}>
                             {React.cloneElement(badge.icon, { className: `mr-2 ${badge.color} text-2xl` })}
                             {badge.label}
                         </div>

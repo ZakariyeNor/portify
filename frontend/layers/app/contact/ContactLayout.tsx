@@ -140,7 +140,7 @@ const ContactLayout = () => {
                     <Button
                         type="submit"
                         variant="primary"
-                        className="w-40"
+                        className="w-40 action"
                         label={loading ? "Sending..." : "Send Message"}
                         disabled={loading}
                     />
