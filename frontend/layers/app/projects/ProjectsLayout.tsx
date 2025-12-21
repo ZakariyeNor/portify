@@ -153,7 +153,7 @@ const ProjectsLayout = () => {
             {/* Project cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {filteredProjects && filteredProjects.map((project) => (
-                    <div key={project.id} className="card bg-base-100 w-full shadow-sm">
+                    <div key={project.id} className="card w-full shadow-sm">
                         <div className="w-full h-64 overflow-hidden rounded-lg">
                             <Image
                                 src={project.image}

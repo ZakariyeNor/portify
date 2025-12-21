@@ -28,7 +28,7 @@ const Navigation = () => {
   }, [pathName])
 
   return (
-    <div className="navbar bg-base-100 shadow-sm relative">
+    <div className="navbar bg-base-100 shadow-sm relative" data-theme="light">
       <div className="navbar-start relative">
         {/* Mobile icon */}
         <div

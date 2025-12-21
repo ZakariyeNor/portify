@@ -75,7 +75,7 @@ const SkillsPage = () => {
             >
               <Button
                 type="button"
-                className="absolute right-10 top-5 w-full sm:w-[60%] md:w-[40%] lg:w-[30%]
+                className="absolute action right-10 top-5 w-full sm:w-[60%] md:w-[40%] lg:w-[30%]
                   flex items-center justify-center placeholder:mr-5"
                 label="Download Resume"
               />

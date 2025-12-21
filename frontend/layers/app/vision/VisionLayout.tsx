@@ -138,9 +138,9 @@ const VisionLayout = () => {
                 ].map((item, idx) => (
                   <React.Fragment key={idx}>
                     <div className="flex flex-col items-center gap-1">
-                      {idx !== 0 && <div className="w-[1.5px] border-l-2 border-dotted border-gray-300 dark:border-gray-600 h-full grow"></div>}
+                      {idx !== 0 && <div className="w-[1.5px] border-l-2 border-dotted border-gray-300 dark:border-gray-200 h-full grow"></div>}
                       <FaFlag className="text-blue-600 text-xl sm:text-2xl" />
-                      <div className="w-[1.5px] border-l-2 border-dotted border-gray-300 dark:border-gray-600 h-full grow"></div>
+                      <div className="w-[1.5px] border-l-2 border-dotted border-gray-300 dark:border-gray-400 h-full grow"></div>
                     </div>
                     <div className="flex flex-1 flex-col py-6 sm:py-8">
                       <p className="text-blue-500 text-base sm:text-sm font-extrabold">{item.year}</p>
@@ -163,7 +163,7 @@ const VisionLayout = () => {
           <Button
             type='button'
             variant='success'
-            className='w-fit'
+            className='w-fit action'
             label='View My Work'
           />
         </Link>
