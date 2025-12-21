@@ -2,12 +2,11 @@
 
 import React, { useState } from 'react'
 import Button from '../components/ui/Button'
-import { FaGithub } from 'react-icons/fa'
-import { RiTwitterFill } from 'react-icons/ri'
-import { MdEmail } from 'react-icons/md'
 import api from '@/lib/axios'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
+import { FaLinkedin, FaXTwitter } from 'react-icons/fa6'
+import { SiProtonmail } from 'react-icons/si'
 
 
 // Form Control
@@ -157,17 +156,17 @@ const ContactLayout = () => {
                 <div className="flex flex-row items-center justify-center space-x-4 pt-5">
                     <div className="flex items-center justify-center h-12 w-12 rounded-full icons">
                         <Link href='https://github.com/ZakariyeNor' target='_blank' rel="noopener noreferrer">
-                            <FaGithub className="h-6 w-6" />
+                            <FaLinkedin className='h-6 w-9 text-blue-600' />
                         </Link>
                     </div>
                     <div className="flex items-center justify-center h-12 w-12 rounded-full icons">
                         <Link href='https://x.com/zakariye_nor23' target='_blank' rel="noopener noreferrer">
-                            <RiTwitterFill className="h-6 w-6" />
+                            <FaXTwitter className="h-6 w-6" />
                         </Link>
                     </div>
                     <div className="flex items-center justify-center h-12 w-12 rounded-full icons">
-                        <Link href='mailto:zakigeorgia1@gmail.com' target='_blank' rel="noopener noreferrer">
-                            <MdEmail className="h-6 w-6" />
+                        <Link href='mailto:contact.portify@theowner.me' target='_blank' rel="noopener noreferrer">
+                            <SiProtonmail className="h-6 w-6 text-purple-400" />
                         </Link>
                     </div>
                 </div>
