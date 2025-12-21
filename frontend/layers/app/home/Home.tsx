@@ -1,4 +1,5 @@
 'use client'
+
 import React, { useEffect, useState } from 'react'
 import Button from '../components/ui/Button'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
@@ -8,6 +9,7 @@ import Image from 'next/image'
 import Badges from './Badges'
 import api from '@/lib/axios'
 import Link from 'next/link'
+
 
 // User info interface
 interface userProfile {
@@ -35,7 +37,6 @@ const HomePage = () => {
                 if (response.data.length === 0) {
                     setError(["No profile found"]);
                     setUserData(null);
-                    console.log(response.data)
                     
                 } else {
                     setUserData(response.data);
@@ -88,7 +89,6 @@ const HomePage = () => {
                                         type='button'
                                         variant='primary'
                                         className='action'
-                                        onClick={() => console.log('clicked the home primary button')}
                                     />
                                 </Link>
 

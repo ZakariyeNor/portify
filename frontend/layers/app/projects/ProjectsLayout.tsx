@@ -1,10 +1,12 @@
 'use client'
+
 import api from '@/lib/axios'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { LuListFilter } from 'react-icons/lu'
 import { MdOutlineSearch, MdOutlineUnfoldLess } from 'react-icons/md'
 import Image from 'next/image'
+
 
 // Project interface
 interface projects {

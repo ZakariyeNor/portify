@@ -1,5 +1,6 @@
 declare module '*.css';
 
+// For next-pwa module but i used manually SW registration (Future use)
 declare module '@ducanh2912/next-pwa' {
   import { NextConfig } from 'next';
  

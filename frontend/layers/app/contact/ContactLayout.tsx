@@ -1,4 +1,5 @@
 'use client'
+
 import React, { useState } from 'react'
 import Button from '../components/ui/Button'
 import { FaGithub } from 'react-icons/fa'
@@ -7,7 +8,6 @@ import { MdEmail } from 'react-icons/md'
 import api from '@/lib/axios'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
-
 
 
 // Form Control

@@ -1,6 +1,5 @@
 'use client'
 
-
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Button from '@/app/components/ui/Button'
@@ -14,7 +13,7 @@ import { techColors } from './techColors'
 import Marquee from 'react-fast-marquee';
 
 
-// Individual project interface
+// Assessment interface
 interface Assessment {
     id: number;
     title: string;
@@ -22,6 +21,7 @@ interface Assessment {
     image: string;
 }
 
+// Individual project interface
 interface individualProject {
     id: number;
     name: string;
@@ -36,7 +36,6 @@ interface individualProject {
     source_code: string;
     assessment: Assessment[];
 }
-
 
 const ProjectDetails = () => {
 
@@ -58,14 +57,12 @@ const ProjectDetails = () => {
                 if (res.data.length === 0) {
                     setError(["There is no project with that id"]);
                     setindividualProject(null);
-                    console.log(res.data)
                 } else {
                     setindividualProject(res.data);
                     setError(null);
                 }
             } catch (err: any) {
                 setError([err.res?.data?.detail || "Something went wrong"]);
-                console.log(err)
             } finally {
                 setLoading(false);
             }

@@ -8,10 +8,14 @@ export default function ServiceWorkerRegistration() {
       navigator.serviceWorker
         .register('/sw.js')
         .then((registration) => {
-          console.log('Service Worker registered:', registration);
+          if (process.env.NODE_ENV === 'development') {
+            console.log('Service Worker registered in development mode:', registration);
+          }
         })
         .catch((error) => {
-          console.error('Service Worker registration failed:', error);
+          if (process.env.NODE_ENV === 'development') {
+            console.error('Service Worker registration failed in development mode:', error);
+          }
         });
     }
   }, []);

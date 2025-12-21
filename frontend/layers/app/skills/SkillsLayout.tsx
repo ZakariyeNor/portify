@@ -1,4 +1,5 @@
 'use client'
+
 import React, { useEffect, useState } from 'react'
 import Button from '../components/ui/Button'
 import { FiDownload } from 'react-icons/fi'
@@ -7,7 +8,6 @@ import { SkillsData } from './Interface'
 import api from '@/lib/axios'
 import Link from 'next/link'
 import { Certificate } from 'crypto'
-
 
 
 const SkillsPage = () => {
@@ -32,11 +32,9 @@ const SkillsPage = () => {
           setSkillsData(resp.data)
           setError(null)
         }
-        console.log(resp.data)
       } catch (errs: any) {
         setError([errs.resp?.data?.detail || "Something went wrong"])
         setSkillsData(null)
-        console.log(errs)
       } finally {
         setLoading(false);
       }
