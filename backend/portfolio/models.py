@@ -248,4 +248,3 @@ class LongTerm(models.Model):
 
     def __str__(self):
         return f"{self.year} – {self.plan}"
-    
