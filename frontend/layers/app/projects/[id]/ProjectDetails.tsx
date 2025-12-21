@@ -206,50 +206,53 @@ const ProjectDetails = () => {
                     </div>
 
                      {/* Assessment reposrts */}
-                    <div className="flex flex-col mt-6 md:mt-10 px-4 md:px-0">
-                        <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">Assessment Reports</h1>
-                        <p className="text-sm md:text-base text-gray-600">This is the Assessment results from the assessors</p>
+                     {Array.isArray(individualProject.assessment) &&
+                        individualProject.assessment.length > 0 && (
+                        <div className="flex flex-col mt-6 md:mt-10 px-4 md:px-0">
+                            <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">Assessment Reports</h1>
+                            <p className="text-sm md:text-base text-gray-600">This is the Assessment results from the assessors</p>
 
-                        <div className="mt-6 -ml-15 -mr-15 overflow-hidden">
-                            <Marquee pauseOnHover speed={20}>
-                                <div className="flex gap-x-4 md:gap-x-6 lg:gap-x-8 px-4">
-                                    {individualProject.assessment.map((assessment) => (
-                                        <div
-                                            key={assessment.id}
-                                            className="shrink-0 flex flex-col w-[75vw] sm:w-[350px] md:w-[450px]
-                                            lg:w-[550px] h-auto rounded-xl overflow-hidden shadow-sm m-2"
-                                        >
-                                            {/* Image Container: object-contain ensures the WHOLE image is seen */}
-                                            <div className="w-full bg-black/5 flex items-center justify-center">
-                                                <Image
-                                                    src={assessment.image}
-                                                    alt={assessment.title}
-                                                    width={600}
-                                                    height={400}
-                                                    /* object-contain is key to seeing the whole image */
-                                                    className="w-full h-auto object-contain"
-                                                    unoptimized
-                                                />
+                            <div className="mt-6 -ml-15 -mr-15 overflow-hidden">
+                                <Marquee pauseOnHover speed={20}>
+                                    <div className="flex gap-x-4 md:gap-x-6 lg:gap-x-8 px-4">
+                                        {individualProject.assessment.map((assessment) => (
+                                            <div
+                                                key={assessment.id}
+                                                className="shrink-0 flex flex-col w-[75vw] sm:w-[350px] md:w-[450px]
+                                                lg:w-[550px] h-auto rounded-xl overflow-hidden shadow-sm m-2"
+                                            >
+                                                {/* Image Container: object-contain ensures the WHOLE image is seen */}
+                                                <div className="w-full bg-black/5 flex items-center justify-center">
+                                                    <Image
+                                                        src={assessment.image}
+                                                        alt={assessment.title}
+                                                        width={600}
+                                                        height={400}
+                                                        /* object-contain is key to seeing the whole image */
+                                                        className="w-full h-auto object-contain"
+                                                        unoptimized
+                                                    />
+                                                </div>
+
+                                                {/* Text Container: padding scales down on small screens */}
+                                                <div className="p-3 md:p-5 flex flex-col gap-y-1 md:gap-y-2">
+                                                    <h3 className="font-bold text-sm md:text-lg lg:text-xl text-gray-900 leading-tight">
+                                                        {/* Removed truncate so full title shows */}
+                                                        {assessment.title}
+                                                    </h3>
+                                                    <p className="text-xs md:text-sm lg:text-base text-gray-700 leading-normal">
+                                                        {/* Removed line-clamp so full description shows */}
+                                                        {assessment.description}
+                                                    </p>
+                                                </div>
                                             </div>
 
-                                            {/* Text Container: padding scales down on small screens */}
-                                            <div className="p-3 md:p-5 flex flex-col gap-y-1 md:gap-y-2">
-                                                <h3 className="font-bold text-sm md:text-lg lg:text-xl text-gray-900 leading-tight">
-                                                    {/* Removed truncate so full title shows */}
-                                                    {assessment.title}
-                                                </h3>
-                                                <p className="text-xs md:text-sm lg:text-base text-gray-700 leading-normal">
-                                                    {/* Removed line-clamp so full description shows */}
-                                                    {assessment.description}
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                    ))}
-                                </div>
-                            </Marquee>
+                                        ))}
+                                    </div>
+                                </Marquee>
+                            </div>
                         </div>
-                    </div>
+                     )}
                 </>
             )}
         </div>
