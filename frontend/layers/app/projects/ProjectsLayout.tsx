@@ -84,7 +84,7 @@ const ProjectsLayout = () => {
     })
 
     return (
-        <div className="flex flex-col sm:p-25 lg:p-25 min-h-screen">
+        <div className="flex flex-col p-15 lg:p-25 min-h-screen">
             {/* Intro*/}
             <div className="flex flex-col space-y-2 ">
                 <h1 className="font-extrabold text-3xl">
@@ -151,9 +151,9 @@ const ProjectsLayout = () => {
             </div>
 
             {/* Project cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredProjects && filteredProjects.map((project) => (
-                    <div key={project.id} className="card w-full shadow-sm">
+                    <div key={project.id} className="card w-full shadow-xl/20 ">
                         <div className="w-full h-64 overflow-hidden rounded-lg">
                             <Image
                                 src={project.image}

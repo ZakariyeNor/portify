@@ -157,11 +157,11 @@ const SkillsPage = () => {
                 <img
                   src={cert.image}
                   alt={cert.name}
-                  className=" w-full h-[65%] object-contain rounded-lg bg-white"
+                  className=" w-full h-[65%] object-contain rounded-lg bg-white shadow-2xl"
                 />
 
                 <div className="
-                      bg-gray-200/20 mt-4 p-4 rounded-2xl
+                      bg-gray-200/20 mt-4 p-4 rounded-2xl shadow-xl
                       text-sm sm:text-base md:text-lg font-semibold"
                 >
                   {cert.name}

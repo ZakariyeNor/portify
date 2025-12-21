@@ -105,7 +105,7 @@ const ProjectDetails = () => {
                     </div>
 
                     {/* Image */}
-                    <div className="w-full lg:w-3/3 mx-auto mb-6 rounded-lg overflow-hidden">
+                    <div className="w-full lg:w-3/3 mx-auto mb-6 rounded-lg overflow-hidden shadow-2xl/30">
                         <Image
                             src={individualProject.image}
                             alt="Project detail image"
