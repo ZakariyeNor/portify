@@ -15,7 +15,6 @@ def generate_image_file(name="test.jpg"):
     # Minimal JPEG header bytes to simulate an image upload
     return SimpleUploadedFile(name, b"\xff\xd8\xff\xe0" + b"0" * 10, content_type="image/jpeg")
 
-
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class ProfileTests(TestCase):
     def setUp(self):

@@ -6,7 +6,11 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 import dj_database_url
+import logging
 
+# Set up logger
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 # Initialize environ
 env = environ.Env()
@@ -16,16 +20,18 @@ env = environ.Env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 env_file = BASE_DIR / ".env"
 
+# Get environment variables from .env file if it exists
 if env_file.exists():
     env.read_env(env_file)
-    print(f"DEBUG: .env file loaded from {env_file}")
+    logger.debug("DEBUG: .env file loaded from %s", {env_file})
 else:
     # Only warn if running locally (not on Railway)
     is_railway = bool(os.environ.get('DATABASE_URL'))
     if not is_railway:
-        print("WARNING: No .env file found, using environment variables")
+        logger.debug("WARNING: No .env file found, using environment variables")
     else:
-        print("INFO: Running on Railway - using environment variables from dashboard")
+        # Railway sets env vars in dashboard
+        logger.info("INFO: Running on Railway - using environment variables from dashboard")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('DJANGO_SECRET_KEY')
@@ -117,9 +123,10 @@ WSGI_APPLICATION = 'portify.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 LEVEL = env("LEVEL", cast=str, default="development")
-print("The level is = ", LEVEL)
+logger.debug("The level is = %s", LEVEL)
+
+# Development DB & ccelery broker (Redis) on docker Postgres
 if LEVEL == "development":
     DATABASES = {
         'default': {
@@ -138,8 +145,8 @@ if LEVEL == "development":
     CELERY_ACCEPT_CONTENT = ["json"]
     CELERY_TASK_SERIALIZER = "json"
     CELERY_RESULT_SERIALIZER = "json"
-    print("CELERY_BROKER_URL =", CELERY_BROKER_URL)
-    print("CELERY_RESULT_BACKEND =", CELERY_RESULT_BACKEND)
+    logger.debug("CELERY_BROKER_URL = %s", CELERY_BROKER_URL)
+    logger.debug("CELERY_RESULT_BACKEND = %s", CELERY_RESULT_BACKEND)
 else:
     # Production DB on Railway
     DATABASES = {
@@ -154,12 +161,12 @@ else:
         CELERY_ACCEPT_CONTENT = ["json"]
         CELERY_TASK_SERIALIZER = "json"
         CELERY_RESULT_SERIALIZER = "json"
-        print(f"Production mode - Using Railway DATABASE_URL and REDIS_URL")
+        logger.info(f"Production mode - Using Railway DATABASE_URL and REDIS_URL")
     else:
         # No Redis available - Celery tasks will fail gracefully
         CELERY_TASK_ALWAYS_EAGER = True
         CELERY_TASK_EAGER_PROPAGATES = True
-        print(f"Production mode - No Redis, Celery tasks run synchronously")
+        logger.info(f"Production mode - No Redis, Celery tasks run synchronously")
 
 # Use SQLite for tests to avoid external dependencies
 if 'test' in sys.argv or 'pytest' in sys.argv:
@@ -169,16 +176,16 @@ if 'test' in sys.argv or 'pytest' in sys.argv:
             'NAME': ':memory:',
         }
     }
-    print("Using in-memory SQLite database for tests")
+    logger.debug("Using in-memory SQLite database for tests")
 
 # Only print DB details when not in tests
 if DATABASES['default']['ENGINE'] != 'django.db.backends.sqlite3':
-    print("\n--- Database Configuration Loaded ---")
-    print(f"Database Name: {DATABASES['default']['NAME']}")
-    print(f"Database Host: {DATABASES['default']['HOST']}")
-    print(f"Database Port: {DATABASES['default']['PORT']}")
-    print(f"Project Secret-key: (SECRET_KEY)")
-    print("-----------------------------------\n")
+    logger.info("\n--- Database Configuration Loaded ---")
+    logger.info(f"Database Name: {DATABASES['default']['NAME']}")
+    logger.info(f"Database Host: {DATABASES['default']['HOST']}")
+    logger.info(f"Database Port: {DATABASES['default']['PORT']}")
+    logger.info(f"Project Secret-key: (SECRET_KEY)")
+    logger.info("-----------------------------------\n")
 
 
 # Password validation
@@ -234,14 +241,15 @@ EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="no-reply@portify.com")
 CONTACT_RECIPIENT_EMAIL = env("CONTACT_RECIPIENT_EMAIL", default="zakilenor@gmail.com")
 
-
-print("EMAIL_HOST =", EMAIL_HOST)
-print("EMAIL_PORT =", EMAIL_PORT)
-print("EMAIL_HOST_USER =", EMAIL_HOST_USER)
-print("EMAIL_HOST_PASSWORD =", EMAIL_HOST_PASSWORD)
-print("EMAIL_USE_TLS =", EMAIL_USE_TLS)
-print("DEFAULT_FROM_EMAIL =", DEFAULT_FROM_EMAIL)
-print("CONTACT_RECIPIENT_EMAIL =", CONTACT_RECIPIENT_EMAIL)
+# Email info
+logger.info("EMAIL_HOST = %s", EMAIL_HOST)
+logger.info("EMAIL_PORT = %s", EMAIL_PORT)
+logger.info("EMAIL_HOST_USER = %s", EMAIL_HOST_USER)
+logger.debug("EMAIL_HOST_PASSWORD = %s", EMAIL_HOST_PASSWORD)
+logger.info("EMAIL_HOST_PASSWORD = %s", "*****************")
+logger.info("EMAIL_USE_TLS = %s", EMAIL_USE_TLS)
+logger.info("DEFAULT_FROM_EMAIL = %s", DEFAULT_FROM_EMAIL)
+logger.info("CONTACT_RECIPIENT_EMAIL = %s", CONTACT_RECIPIENT_EMAIL)
 
 
 
@@ -264,7 +272,7 @@ else:
             "LOCATION": "unique-snowflake",
         }
     }
-    print("WARNING: Using local memory cache (no Redis available)")
+    logger.debug("WARNING: Using local memory cache (no Redis available)")
 
 # Timeout
 CACHE_TTL = 60 * 5

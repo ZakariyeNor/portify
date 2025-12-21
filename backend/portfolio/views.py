@@ -25,6 +25,7 @@ from .tasks import send_contact_email
 from django.core.cache import cache
 from django.conf import settings
 
+import logging
 
 # Hidden landing page
 def landing_api(request):
@@ -35,6 +36,10 @@ def landing_api(request):
 
 # Chache limittime
 CACHE_TTL = getattr(settings, "CACHE_TTL", 60 * 1) # one minute chaching
+
+# To log info in production
+logger = logging.getLogger(__name__)
+
 
 # Profile api view
 class ProfileList(generics.ListAPIView):
@@ -68,12 +73,12 @@ class ProjectsListCreate(generics.ListCreateAPIView):
         cached_data = cache.get(cache_key)
         
         if cached_data:
-            print(f"[CACHE HIT] Projects list fetched from cache.")
+            logger.info(f"[CACHE HIT] Projects list fetched from cache.")
             return Response(cached_data)
         
         response = super().list(request, *args, **kwargs)
         cache.set(cache_key, response.data, timeout=CACHE_TTL)
-        print(f"[CACHE SET] Projects list cached with key '{cache_key}'.")
+        logger.info(f"[CACHE SET] Projects list cached with key '{cache_key}'.")
         return response
 
 
@@ -97,12 +102,12 @@ class ProjectsDetail(generics.RetrieveUpdateDestroyAPIView):
         cached_data = cache.get(cache_key)
         
         if cached_data:
-            print(f"[CACHE HIT] Project {kwargs['pk']} fetched from cache.")
+            logger.info(f"[CACHE HIT] Project {kwargs['pk']} fetched from cache.")
             return Response(cached_data)
         
         response = super().retrieve(request, *args, **kwargs)
         cache.set(cache_key, response.data, timeout=CACHE_TTL)
-        print(f"[CACHE SET] Project {kwargs['pk']} cached with key '{cache_key}'.")
+        logger.info(f"[CACHE SET] Project {kwargs['pk']} cached with key '{cache_key}'.")
         return response
     
     # Update and delete cached data
@@ -111,7 +116,7 @@ class ProjectsDetail(generics.RetrieveUpdateDestroyAPIView):
         cache_key = f"project_{kwargs['pk']}"
         cache.delete(cache_key)
         cache.delete("project_list")
-        print(f"[CACHE DELETE] Project {kwargs['pk']} and project list caches cleared.")
+        logger.info(f"[CACHE DELETE] Project {kwargs['pk']} and project list caches cleared.")
         return response
 
     # Delete and reset cached data of the main project list
@@ -120,8 +125,9 @@ class ProjectsDetail(generics.RetrieveUpdateDestroyAPIView):
         cache_key = f"project_{kwargs['pk']}"
         cache.delete(cache_key)
         cache.delete("project_list")
-        print(f"[CACHE DELETE] Project {kwargs['pk']} and project list caches cleared (deleted).")
+        logger.info(f"[CACHE DELETE] Project {kwargs['pk']} and project list caches cleared (deleted).")
         return response
+
 """
     Skills page views & individual CRUD endpoints 
     for Education, Skill, SkillCategory, and Certificates
