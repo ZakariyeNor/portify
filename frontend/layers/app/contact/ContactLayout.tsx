@@ -155,7 +155,7 @@ const ContactLayout = () => {
                 {/* Icons */}
                 <div className="flex flex-row items-center justify-center space-x-4 pt-5">
                     <div className="flex items-center justify-center h-12 w-12 rounded-full icons">
-                        <Link href='https://github.com/ZakariyeNor' target='_blank' rel="noopener noreferrer">
+                        <Link href='https://www.linkedin.com/in/zaki-george-67648a39b/' target='_blank' rel="noopener noreferrer">
                             <FaLinkedin className='h-6 w-9 text-blue-600' />
                         </Link>
                     </div>
