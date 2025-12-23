@@ -6,7 +6,7 @@ import api from '@/lib/axios'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import { FaLinkedin, FaXTwitter } from 'react-icons/fa6'
-import { SiProtonmail } from 'react-icons/si'
+import { SiMaildotcom, SiProtonmail } from 'react-icons/si'
 
 
 // Form Control
@@ -165,8 +165,8 @@ const ContactLayout = () => {
                         </Link>
                     </div>
                     <div className="flex items-center justify-center h-12 w-12 rounded-full icons">
-                        <Link href='mailto:contact.portify@theowner.me' target='_blank' rel="noopener noreferrer">
-                            <SiProtonmail className="h-6 w-6 text-purple-400" />
+                        <Link href='mailto:theowner.me@engineer.com' target='_blank' rel="noopener noreferrer">
+                            <SiMaildotcom className="h-6 w-6 text-blue-800" />
                         </Link>
                     </div>
                 </div>
