@@ -1,7 +1,7 @@
 /* @type {import('next-sitemap').IConfig} */
 module.exports = {
   // The base URL of your frontend site
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://api.theowner.me',
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://theowner.me',
 
   // Automatically generate a robots.txt file
   generateRobotsTxt: true,
@@ -26,7 +26,7 @@ module.exports = {
     ],
     // Include any additional sitemaps (e.g., dynamic server-generated sitemap)
     additionalSitemaps: [
-      `${process.env.NEXT_PUBLIC_SITE_URL || 'https://api.theowner.me'}/server-sitemap.xml`,
+      `${process.env.NEXT_PUBLIC_SITE_URL || 'https://theowner.me'}/server-sitemap.xml`,
     ],
   },
 };

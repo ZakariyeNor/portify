@@ -8,8 +8,8 @@ Disallow: /admin
 Disallow: /api
 
 # Host
-Host: https://api.theowner.me
+Host: https://theowner.me
 
 # Sitemaps
-Sitemap: https://api.theowner.me/sitemap.xml
-Sitemap: https://api.theowner.me/server-sitemap.xml
+Sitemap: https://theowner.me/sitemap.xml
+Sitemap: https://theowner.me/server-sitemap.xml
