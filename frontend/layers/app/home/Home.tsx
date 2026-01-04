@@ -111,12 +111,12 @@ const HomePage = () => {
                                         </Link>
                                     </div>
                                     <div className="flex items-center justify-center h-12 w-12 rounded-full icons">
-                                        <Link href='https://x.com/zakariye_nor23' target='_blank' rel="noopener noreferrer">
+                                        <Link href='https://x.com/ZakariyeNorX' target='_blank' rel="noopener noreferrer">
                                             <RiTwitterXLine className='h-6 w-9' />
                                         </Link>
                                     </div>
                                     <div className="flex items-center justify-center h-12 w-12 rounded-full icons">
-                                        <Link href='https://www.linkedin.com/in/zaki-george-67648a39b/' target='_blank' rel="noopener noreferrer">
+                                        <Link href='https://www.linkedin.com/in/zakariye-f-nor-67648a39b/' target='_blank' rel="noopener noreferrer">
                                             <FaLinkedin className='h-6 w-9 text-blue-600' />
                                         </Link>
                                     </div>
