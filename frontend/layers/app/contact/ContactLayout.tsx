@@ -7,6 +7,7 @@ import Link from 'next/link'
 import toast from 'react-hot-toast'
 import { FaLinkedin, FaXTwitter } from 'react-icons/fa6'
 import { SiMaildotcom, SiProtonmail } from 'react-icons/si'
+import { FaPhoneAlt } from 'react-icons/fa'
 
 
 // Form Control
@@ -42,7 +43,7 @@ const ContactLayout = () => {
             const sendForm = await api.post('/api/contact_us/', formData);
 
             toast.success("Message sent successfully!, we'll answer you in 24 hours.");
-            
+
             // reset
             setFormData({ name: '', email: '', subject: '', message: '' });
             setError(null);
@@ -70,6 +71,18 @@ const ContactLayout = () => {
                 <p className="text-gray-400 text-sm sm:text-base md:text-lg">
                     Feel free to reach out for collaborations, questions, or opportunities.
                     I'd love to hear from you!
+                </p>
+                <p className="text-gray-400 text-base md:text-lg">
+                    I'm a full-stack developer with real-world experience building web apps,
+                    booking systems, and solutions for local businesses.
+                </p>
+                <p className="text-gray-400 text-base md:text-lg">
+                    Whether you're looking for a custom website, online booking system,
+                    or just want to discuss tech ideas, I'm here to help.
+                    Reach out and let's turn your ideas into reality!
+                </p>
+                <p className="text-gray-400 text-base md:text-lg font-semibold">
+                    Quick response guaranteed – I usually reply within 24 hours
                 </p>
             </div>
 
@@ -150,7 +163,7 @@ const ContactLayout = () => {
 
             {/* Contact links */}
             <div className="mt-10 flex flex-col items-center space-y-5">
-                <h6>Or find me on</h6>
+                <h6>Find me on</h6>
 
                 {/* Icons */}
                 <div className="flex flex-row items-center justify-center space-x-4 pt-5">
@@ -169,6 +182,15 @@ const ContactLayout = () => {
                             <SiMaildotcom className="h-6 w-6 text-blue-800" />
                         </Link>
                     </div>
+                </div>
+                {/* Call */}
+                <div className="flex flex-col items-center space-y-7 mt-4">
+                    <p className="text-gray-400 text-sm sm:text-base">
+                        Or call me at
+                    </p>
+                    <a href="tel:+46701305100" className="flex items-center justify-center h-12 w-12 rounded-full icons">
+                        <FaPhoneAlt className="h-6 w-6 text-green-600" />
+                    </a>
                 </div>
             </div>
 
