@@ -88,7 +88,7 @@ const VisionLayout = () => {
           </div>
 
           {/* Cards */}
-          <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-9 gap-3 wrap-break-word">
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-9 gap-3 wrap-break-word">
             {/* Card 1 */}
             {vision.principles_list.map((principle) => {
               const Icon = iconsMap[principle.key] ?? FiBook;

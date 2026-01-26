@@ -37,14 +37,14 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Portify",
-  description: "Personal portfolio showcasing projects and skills",
-  keywords: ["portfolio", "Next.js", "Tailwind", "DaisyUI", "shadcn/ui"],
+  title: "The Owner",
+  description: "The Owner - [Personal portfolio showcasing projects and skills]",
+  keywords: ["the owner", "portfolio", "skills", "projects", "contact me", "vision"],
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Portify",
+    title: "The Owner",
   },
   icons: {
     icon: [

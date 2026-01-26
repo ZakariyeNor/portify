@@ -71,11 +71,14 @@ const HomePage = () => {
                 {userData && (
                     <>
                         <div className="flex flex-col spece-y-3 w-full lg:w-[50%] p-6">
-                            <h1 className="font-extrabold text-4xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl">
-                                {userData[0].first_name} {userData[0].last_name}
+                            <h1 className="font-extrabold text-2xl sm:text-4xl md:text-3xl lg:text-4xl">
+                                The Owner
                             </h1>
+                            <p className="font-extrabold text-blue-500 text-4xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl">
+                                {userData[0].first_name} {userData[0].last_name}
+                            </p>
 
-                            <p className="text-blue-500 font-bold text-lg sm:text-xs md:text-base lg:text-xl xl:text-2xl pt-3">
+                            <p className="text-gray-600 font-bold text-lg sm:text-xs md:text-base lg:text-xl xl:text-2xl pt-3">
                                 A Full-Stack Developer with DevOps Skills
                             </p>
 

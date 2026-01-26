@@ -2,17 +2,39 @@ import HomePage from "./home/Home";
 import Image from "next/image";
 
 export const metadata = {
-  title: "Home | Portfolio",
-  description: "Welcome to my portfolio. Explore projects, skills, and contact information.",
+  title: "The Owner | Portify",
+  description: "The Owner - Welcome to my portfolio. Explore projects, skills, and contact information.",
+  keywords: ["The Owner", "profile", "projects", "skills", "portfolio"],
   openGraph: {
-    title: "Home | Portfolio",
-    description: "Welcome to my portfolio. Explore projects, skills, and contact information.",
-    url: "https://example.com",
+    title: "ThweOwner",
+    description: "The Owner - Welcome to my portfolio. Explore projects, skills, and contact information.",
+    url: "https://theowner.me",
+    siteName: "The Owner",
+    type: "website",
+    locale: "en_US",
+    images: [
+      {
+        url: "https://theowner.me",
+        width: 1200,
+        height: 630,
+        alt: "The Owner Portfolio",
+      },
+    ],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/icons/apple-icon-180.png",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Home | Portfolio",
+    title: "Portify | 3Ps",
     description: "Welcome to my portfolio. Explore projects, skills, and contact information.",
+  },
+  alternates: {
+    canonical: "https://theowner.me",
+    types: {
+      "application/rss+xml": "/feed.xml",
+    },
   },
 }
 
