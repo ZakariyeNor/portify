@@ -6,7 +6,7 @@ export const metadata = {
   description: "The Owner - Welcome to my portfolio. Explore projects, skills, and contact information.",
   keywords: ["The Owner", "profile", "projects", "skills", "portfolio"],
   openGraph: {
-    title: "ThweOwner",
+    title: "The Owner",
     description: "The Owner - Welcome to my portfolio. Explore projects, skills, and contact information.",
     url: "https://theowner.me",
     siteName: "The Owner",
