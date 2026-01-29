@@ -75,11 +75,11 @@ const ContactLayout = () => {
                 {/* Tech / Developer Inquiries */}
                 <h2 className="text-white text-lg md:text-xl font-bold">Tech & Development</h2>
                 <p className="text-gray-400 text-base md:text-lg">
-                    ★ I'm a full-stack developer with real-world experience building web apps,
+                    <strong className='text-black'>★</strong> I'm a full-stack developer with real-world experience building web apps,
                     booking systems, and solutions for local businesses.
                 </p>
                 <p className="text-gray-400 text-base md:text-lg">
-                    ★ Whether you're looking for a custom website, online booking system,
+                    Whether you're looking for a custom website, online booking system,
                     or just want to discuss tech ideas, I'm here to help.
                     Reach out and let's turn your ideas into reality!
                 </p>
@@ -87,14 +87,14 @@ const ContactLayout = () => {
                 {/* NGO / Co-Founder Inquiries */}
                 <h2 className="text-white text-lg md:text-xl font-bold">NGO & Co-Founder Opportunities</h2>
                 <p className="text-gray-400 text-base md:text-lg">
-                    ★ I'm looking for passionate people to start a participatory NGO with me.
+                    <strong className='text-black'>★</strong> I'm looking for passionate people to start a participatory NGO with me.
                     If you care about community-led projects, democratic systems, and building a sustainable organization,
                     reach out! Tell me a bit about yourself, your skills, and why you want to join this initiative.
                 </p>
 
                 {/* Closing */}
                 <p className="text-gray-400 text-base md:text-lg font-semibold">
-                    ★ Quick response guaranteed – I usually reply within 24 hours
+                    <strong className='text-black'>★</strong> Quick response guaranteed – I usually reply within 24 hours
                 </p>
             </div>
 
